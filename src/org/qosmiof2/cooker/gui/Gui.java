@@ -14,7 +14,8 @@ import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.methods.MethodProvider;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.data.Fish;
-import org.qosmiof2.cooker.nodes.Node;
+import org.qosmiof2.cooker.nodes.Bank;
+import org.qosmiof2.cooker.nodes.Cook;
 
 
 public class Gui extends MethodProvider {
@@ -30,7 +31,6 @@ public class Gui extends MethodProvider {
 	
 	public Gui(MethodContext ctx) {
 		super(ctx);
-		this.qc = qc;
 		showGui();
 	}
 
@@ -60,6 +60,8 @@ public class Gui extends MethodProvider {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				qc.food = (Fish) cb.getSelectedItem();
+				qc.nodes.add(new Bank(ctx));
+				qc.nodes.add(new Cook(ctx));
 			}
 			
 		});

@@ -10,7 +10,6 @@ public class Bank extends Node {
 	
 	public Bank(MethodContext ctx) {
 		super(ctx);
-		this.qc = qc;
 	}
 
 	@Override

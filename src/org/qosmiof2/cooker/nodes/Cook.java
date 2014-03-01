@@ -11,7 +11,6 @@ public class Cook extends Node {
 	
 	public Cook(MethodContext ctx) {
 		super(ctx);
-		this.qc = qc;
 	}
 
 	@Override
@@ -24,6 +23,9 @@ public class Cook extends Node {
 
 	@Override
 	public void execute() {
+		for(Object fire : ctx.objects.select().nearest().id(1).first()){
+			
+		}
 		
 	}
 

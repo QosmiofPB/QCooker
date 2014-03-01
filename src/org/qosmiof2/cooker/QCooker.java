@@ -1,5 +1,6 @@
 package org.qosmiof2.cooker;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -29,6 +30,7 @@ public class QCooker extends PollingScript implements MessageListener, PaintList
 	private int cooked;
 	private int burned;
 	public Fish food;
+	
 	private Timer runTime = new Timer(0);
 
 	@Override
@@ -50,7 +52,7 @@ public class QCooker extends PollingScript implements MessageListener, PaintList
 		for (Node node : nodes) {
 			if (node.activate()) {
 				node.execute();
-				return Random.nextInt(500, 750);
+				return Random.nextInt(200, 550);
 			}
 		}
 		return 100;
@@ -69,8 +71,10 @@ public class QCooker extends PollingScript implements MessageListener, PaintList
 	@Override
 	public void repaint(Graphics g1) {
 		Graphics2D g = (Graphics2D) g1;
-		
+		g.setColor(Color.green);
 		g.drawRect(0, 0, 300, 200);
+		g.setColor(Color.black);
+		g.fillRect(0,  0, 300 , 200);
 		
 	}
 }
