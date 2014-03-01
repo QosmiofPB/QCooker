@@ -5,7 +5,7 @@ public enum Fish {
 	Chicken("Chicken", 2138, 2144),
 	CRAYFISH("Crayfish", 13435, 13437),
 	SHRIMP("Shrimp", 317, 7954),
-	ANCHOVIES("Anchovies", 321, 0),
+	ANCHOVIES("Anchovies", 321, 323),
 	SARDINE("Sardine", 327, 0),
 	SALMON("Salmon", 331, 0),
 	TROUT("Trout", 335, 0),
