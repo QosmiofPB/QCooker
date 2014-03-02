@@ -7,11 +7,14 @@ import org.powerbot.script.util.Condition;
 import org.powerbot.script.wrappers.GameObject;
 import org.powerbot.script.wrappers.Item;
 import org.qosmiof2.cooker.QCooker;
+import org.qosmiof2.cooker.gui.Gui;
 
 public class Cook extends Node {
 
+	private Gui gui;
 	private QCooker qc;
-	private int raw_food;
+	private int rawFood;
+	private int[] fireId = { 70755, 70764, 14821, 49204, 23941 };
 
 	public Cook(MethodContext ctx) {
 		super(ctx);
@@ -19,10 +22,10 @@ public class Cook extends Node {
 
 	@Override
 	public boolean activate() {
-		final GameObject fire = ctx.objects.select().nearest().id(1).first()
-				.poll();
-		raw_food = qc.food.getRawId();
-		return !ctx.backpack.select().id(raw_food).isEmpty()
+		final GameObject fire = ctx.objects.select().nearest().id(fireId)
+				.first().poll();
+		rawFood = gui.food.getRawId();
+		return !ctx.backpack.select().id(rawFood).isEmpty()
 				&& ctx.players.local().getAnimation() == -1
 				&& ctx.players.local().isIdle()
 				&& !ctx.objects.select().id(fire).isEmpty();
@@ -30,43 +33,30 @@ public class Cook extends Node {
 
 	@Override
 	public void execute() {
-		final GameObject fire = ctx.objects.select().nearest().id(1).poll();
+		qc.status = "Cooking food...";
+		final GameObject fire = ctx.objects.select().nearest().id(fireId)
+				.poll();
 		if (fire.isInViewport()) {
-			for (final Item food : ctx.backpack.select().id(qc.food.getRawId())) {
-				food.interact("Use");
+			for (final Item food : ctx.backpack.select()
+					.id(gui.food.getRawId())) {
 
-				Condition.wait(new Callable<Boolean>() {
-					public Boolean call() throws Exception {
-						return food.interact("Use");
+				if (food.interact("Use")) {
+					if (fire.interact("Use")) {
+						Condition.wait(new Callable<Boolean>() {
+							public Boolean call() throws Exception {
+								return ctx.widgets.get(1370, 38).isVisible();
+							}
+						}, 1000, 2);
+
+						ctx.widgets.get(1370, 38).click();
+						Condition.wait(new Callable<Boolean>() {
+							public Boolean call() throws Exception {
+								return ctx.widgets.get(1251, 11).isVisible();
+							}
+						}, 1000, 5);
 					}
-				}, 500, 5);
-
-				fire.interact("Use");
-				Condition.wait(new Callable<Boolean>() {
-					public Boolean call() throws Exception {
-						return fire.interact("Use")
-								&& ctx.widgets.get(1370, 38).isVisible();
-					}
-				}, 500, 5);
-			}
-
-			if (ctx.widgets.get(1370, 38).isVisible()) {
-				ctx.widgets.get(1370, 38).click();
-				Condition.wait(new Callable<Boolean>() {
-					public Boolean call() throws Exception {
-						return ctx.widgets.get(1370, 38).click();
-					}
-				}, 1000, 5);
-			}
-
-			Condition.wait(new Callable<Boolean>() {
-				@Override
-				public Boolean call() throws Exception {
-					return !ctx.widgets.get(1251, 11).isVisible();
 				}
-			}, 1000, 70);
-
+			}
 		}
-
 	}
 }

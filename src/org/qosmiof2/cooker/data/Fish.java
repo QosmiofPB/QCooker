@@ -35,7 +35,7 @@ public enum Fish {
 		return NAME;
 	}
 
-	public int getBURNT_ID() {
+	public int getBurntId() {
 		return BURNT_ID;
 	}
 }

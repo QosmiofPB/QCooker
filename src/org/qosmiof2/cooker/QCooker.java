@@ -2,11 +2,10 @@ package org.qosmiof2.cooker;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-
-import javax.swing.SwingUtilities;
 
 import org.powerbot.event.MessageEvent;
 import org.powerbot.event.MessageListener;
@@ -16,27 +15,28 @@ import org.powerbot.script.PollingScript;
 import org.powerbot.script.methods.Skills;
 import org.powerbot.script.util.Random;
 import org.powerbot.script.util.Timer;
-import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.gui.Gui;
 import org.qosmiof2.cooker.nodes.Node;
 
 @Manifest(description = "Cooks anything (almost)", name = "AIO Cooker", authors = "Qosmiof2")
-public class QCooker extends PollingScript implements MessageListener, PaintListener {
+public class QCooker extends PollingScript implements MessageListener,
+		PaintListener {
 
 	public static ArrayList<Node> nodes = new ArrayList<>();
 
-	private int startLvl, startExp;
+	public int startLvl, startExp;
 	private int fishLeft;
 	private int cooked;
 	private int burned;
-	public Fish food;
-	
+	public static String status;
+
 	private Timer runTime = new Timer(0);
 
 	@Override
 	public void start() {
-//		startLvl = ctx.skills.getLevel(Skills.FISHING);
-//		startExp = ctx.skills.getExperience(Skills.FISHING);
+		nodes.clear();
+		startLvl = ctx.skills.getLevel(Skills.COOKING);
+		startExp = ctx.skills.getExperience(Skills.COOKING);
 		EventQueue.invokeLater(new Runnable() {
 
 			@Override
@@ -60,21 +60,52 @@ public class QCooker extends PollingScript implements MessageListener, PaintList
 
 	@Override
 	public void messaged(MessageEvent msg) {
-		if (msg.getMessage().startsWith("You manage to cook ")
+		if (msg.getMessage().startsWith("You successfuly ")
 				&& msg.getSender().equals("")) {
 			cooked++;
-		} else if(msg.getMessage().startsWith("You burned") && msg.getSender().equals("")){
+		} else if (msg.getMessage().startsWith("You acidentally")
+				&& msg.getSender().equals("")) {
 			burned++;
 		}
 	}
 
+	private int x;
+	private int y;
+
+	private int lvl;
+	private int exp;
+
+	private final Font font = new Font("Arial", 1, 15);
+
 	@Override
 	public void repaint(Graphics g1) {
+		lvl = ctx.skills.getRealLevel(Skills.COOKING);
+		exp = ctx.skills.getExperience(Skills.COOKING);
+
+		x = ctx.mouse.getLocation().x;
+		y = ctx.mouse.getLocation().y;
+
 		Graphics2D g = (Graphics2D) g1;
+
+		g.setColor(Color.MAGENTA);
+		g.drawLine(x - 8, y + 8, x + 8, y - 8);
+		g.drawLine(x - 8, y - 8, x + 8, y + 8);
+
+		g.setFont(font);
 		g.setColor(Color.green);
-		g.drawRect(0, 0, 300, 200);
+		g.drawRect(1, 1, 300, 150);
 		g.setColor(Color.black);
-		g.fillRect(0,  0, 300 , 200);
-		
+		g.fillRect(2, 2, 298, 148);
+		g.setColor(Color.white);
+		g.drawString("Level: " + ctx.skills.getLevel(Skills.COOKING) + "("
+				+ (ctx.skills.getLevel(Skills.COOKING) - startLvl) + ")", 10,
+				30);
+		g.drawString("Experience: "
+				+ (ctx.skills.getExperience(Skills.COOKING) - startExp) + "("
+				+ ((ctx.skills.getExperienceAt(lvl + 1) - exp)) + ")", 10, 50);
+		g.drawString("Running: " + runTime.toElapsedString(), 10, 70);
+		g.drawString("Status: " + status, 10, 90);
+
 	}
+
 }

@@ -8,7 +8,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.methods.MethodProvider;
@@ -17,24 +16,24 @@ import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.nodes.Bank;
 import org.qosmiof2.cooker.nodes.Cook;
 
-
 public class Gui extends MethodProvider {
 
 	private JFrame frame = new JFrame("QCooker");
 	private JPanel panel = new JPanel();
 	private JButton button = new JButton();
-	private JTextField tf = new JTextField();
 	private JLabel label = new JLabel();
 	private JComboBox<Fish> cb = new JComboBox<>(Fish.values());
-	
+
+	public static Fish food;
+
 	private QCooker qc;
-	
+
 	public Gui(MethodContext ctx) {
 		super(ctx);
-		showGui();
+		init();
 	}
 
-	public void showGui() {
+	public void init() {
 
 		frame.setBounds(300, 150, 250, 260);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -49,21 +48,22 @@ public class Gui extends MethodProvider {
 
 		label.setBounds(10, 10, 230, 50);
 		label.setText("Please select the fish you want to cook:");
-		
+
 		cb.setBounds(10, 50, 230, 50);
 
 		button.setText("Start");
 		button.setBounds(10, 130, 230, 50);
-		
-		button.addActionListener(new ActionListener(){
+
+		button.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				qc.food = (Fish) cb.getSelectedItem();
+				food = (Fish) cb.getSelectedItem();
 				qc.nodes.add(new Bank(ctx));
 				qc.nodes.add(new Cook(ctx));
+				frame.dispose();
 			}
-			
+
 		});
 
 	}
