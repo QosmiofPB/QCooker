@@ -25,10 +25,10 @@ public class QCooker extends PollingScript implements MessageListener,
 	public static ArrayList<Node> nodes = new ArrayList<>();
 
 	public int startLvl, startExp;
-	private int fishLeft;
+	public static int fishLeft;
 	private int cooked;
-	private int burned;
-	public static String status;
+	private int burnt;
+	public static String status = "Waiting for input...";
 
 	private Timer runTime = new Timer(0);
 
@@ -60,12 +60,12 @@ public class QCooker extends PollingScript implements MessageListener,
 
 	@Override
 	public void messaged(MessageEvent msg) {
-		if (msg.getMessage().startsWith("You successfuly ")
+		if (msg.getMessage().startsWith("You successfully ")
 				&& msg.getSender().equals("")) {
 			cooked++;
-		} else if (msg.getMessage().startsWith("You acidentally")
+		} else if (msg.getMessage().startsWith("You accidentally")
 				&& msg.getSender().equals("")) {
-			burned++;
+			burnt++;
 		}
 	}
 
@@ -93,9 +93,9 @@ public class QCooker extends PollingScript implements MessageListener,
 
 		g.setFont(font);
 		g.setColor(Color.green);
-		g.drawRect(1, 1, 300, 150);
+		g.drawRect(1, 1, 300, 170);
 		g.setColor(Color.black);
-		g.fillRect(2, 2, 298, 148);
+		g.fillRect(2, 2, 298, 168);
 		g.setColor(Color.white);
 		g.drawString("Level: " + ctx.skills.getLevel(Skills.COOKING) + "("
 				+ (ctx.skills.getLevel(Skills.COOKING) - startLvl) + ")", 10,
@@ -105,6 +105,9 @@ public class QCooker extends PollingScript implements MessageListener,
 				+ ((ctx.skills.getExperienceAt(lvl + 1) - exp)) + ")", 10, 50);
 		g.drawString("Running: " + runTime.toElapsedString(), 10, 70);
 		g.drawString("Status: " + status, 10, 90);
+		g.drawString("Cooked: " + cooked, 10, 110);
+		g.drawString("Burnt: " + burnt, 10, 130);
+		g.drawString("Fish left in bank: " + fishLeft , 10, 150);
 
 	}
 
