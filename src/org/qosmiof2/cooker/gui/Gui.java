@@ -26,8 +26,6 @@ public class Gui extends MethodProvider {
 
 	public static Fish food;
 
-	private QCooker qc;
-
 	public Gui(MethodContext ctx) {
 		super(ctx);
 		init();
@@ -59,8 +57,8 @@ public class Gui extends MethodProvider {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				food = (Fish) cb.getSelectedItem();
-				qc.nodes.add(new Bank(ctx));
-				qc.nodes.add(new Cook(ctx));
+				QCooker.nodes.add(new Bank(ctx));
+				QCooker.nodes.add(new Cook(ctx));
 				frame.dispose();
 			}
 

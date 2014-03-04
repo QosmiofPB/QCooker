@@ -12,7 +12,6 @@ import org.qosmiof2.cooker.gui.Gui;
 public class Cook extends Node {
 
 	private Gui gui;
-	private QCooker qc;
 	private int rawFood;
 	private int rangeId = 2772;
 
@@ -33,7 +32,7 @@ public class Cook extends Node {
 
 	@Override
 	public void execute() {
-		qc.status = "Cooking food...";
+		QCooker.status = "Cooking food...";
 		final GameObject range = ctx.objects.select().nearest().id(rangeId)
 				.poll();
 		if (range.isInViewport()) {
@@ -57,7 +56,7 @@ public class Cook extends Node {
 					}
 				}
 			} else { //walks to range
-				qc.status = "Walking...";
+				QCooker.status = "Walking...";
 				ctx.movement.stepTowards(range.getLocation());
 				Condition.wait(new Callable<Boolean>() {
 					public Boolean call() throws Exception {

@@ -9,7 +9,6 @@ import org.qosmiof2.cooker.gui.Gui;
 
 public class Bank extends Node {
 
-	private QCooker qc;
 	private int rawFood;
 
 	public Bank(MethodContext ctx) {
@@ -27,7 +26,7 @@ public class Bank extends Node {
 
 	@Override
 	public void execute() {
-		qc.status = "Banking";
+		QCooker.status = "Banking...";
 		if (ctx.bank.isInViewport()) {
 			if (ctx.bank.isOpen()) {
 				if (ctx.bank.depositInventory()) {
@@ -47,7 +46,7 @@ public class Bank extends Node {
 								}
 							}, 1000, 2);
 							if (!ctx.backpack.select().id(rawFood).isEmpty()) {
-								qc.fishLeft = ctx.bank.id(rawFood).count();
+								QCooker.fishLeft = ctx.bank.id(rawFood).count();
 								ctx.bank.close();
 
 								Condition.wait(new Callable<Boolean>() {
@@ -76,7 +75,7 @@ public class Bank extends Node {
 				}, 500, 3);
 			}
 		} else { // Walks to bank if its not visible.
-			qc.status = "Walking to bank...";
+			QCooker.status = "Walking to bank...";
 			ctx.movement.stepTowards(ctx.bank.getNearest().getLocation());
 			Condition.wait(new Callable<Boolean>() {
 				public Boolean call() throws Exception {
