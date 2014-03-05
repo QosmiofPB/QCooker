@@ -26,7 +26,7 @@ public class Bank extends Node {
 
 	@Override
 	public void execute() {
-		QCooker.status = "Banking...";
+		QCooker.setStatus("Banking...");
 		if (ctx.bank.isInViewport()) {
 			if (ctx.bank.isOpen()) {
 				if (ctx.bank.depositInventory()) {
@@ -54,7 +54,6 @@ public class Bank extends Node {
 										return !ctx.bank.isOpen();
 									}
 								}, 800, 1);
-
 							}
 						}
 					} else { // Deposits inventory if its not empty
@@ -75,7 +74,7 @@ public class Bank extends Node {
 				}, 500, 3);
 			}
 		} else { // Walks to bank if its not visible.
-			QCooker.status = "Walking to bank...";
+			QCooker.setStatus("Walking to bank...");
 			ctx.movement.stepTowards(ctx.bank.getNearest().getLocation());
 			Condition.wait(new Callable<Boolean>() {
 				public Boolean call() throws Exception {

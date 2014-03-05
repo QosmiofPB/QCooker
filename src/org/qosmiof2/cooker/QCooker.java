@@ -24,11 +24,15 @@ public class QCooker extends PollingScript implements MessageListener,
 
 	public static ArrayList<Node> nodes = new ArrayList<>();
 
-	public int startLvl, startExp;
+	private int startLvl, startExp;
 	public static int fishLeft;
 	private int cooked;
 	private int burnt;
 	public static String status = "Waiting for input...";
+
+	public static void setStatus(String status) {
+		QCooker.status = status;
+	}
 
 	private Timer runTime = new Timer(0);
 
@@ -88,8 +92,8 @@ public class QCooker extends PollingScript implements MessageListener,
 		Graphics2D g = (Graphics2D) g1;
 
 		g.setColor(Color.MAGENTA);
-		g.drawLine(x - 8, y + 8, x + 8, y - 8);
-		g.drawLine(x - 8, y - 8, x + 8, y + 8);
+		g.drawLine(x - 10, y + 10, x + 10, y - 10);
+		g.drawLine(x - 10, y - 10, x + 10, y + 10);
 
 		g.setFont(font);
 		g.setColor(Color.green);
