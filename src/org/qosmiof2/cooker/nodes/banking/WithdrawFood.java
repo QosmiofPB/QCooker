@@ -4,8 +4,9 @@ import java.util.concurrent.Callable;
 
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Condition;
+import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.gui.Gui;
-import org.qosmiof2.cooker.nodes.Node;
+import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class WithdrawFood extends Node {
 
@@ -19,7 +20,6 @@ public class WithdrawFood extends Node {
 	public boolean activate() {
 		rawFood = Gui.food.getRawId();
 		return ctx.players.local().getAnimation() == -1 && ctx.bank.isOpen()
-				&& ctx.backpack.select().id(rawFood).isEmpty()
 				&& ctx.backpack.select().isEmpty();
 	}
 
@@ -30,6 +30,16 @@ public class WithdrawFood extends Node {
 			Condition.wait(new Callable<Boolean>() {
 				public Boolean call() throws Exception {
 					return !ctx.backpack.select().id(rawFood).isEmpty();
+				}
+			}, 500, 2);
+		}
+
+		if (!ctx.backpack.select().id(rawFood).isEmpty()) {
+			QCooker.setFishLeft(ctx.bank.id(rawFood).count());
+			ctx.bank.close();
+			Condition.wait(new Callable<Boolean>() {
+				public Boolean call() throws Exception {
+					return !ctx.bank.isOpen();
 				}
 			}, 500, 2);
 		}

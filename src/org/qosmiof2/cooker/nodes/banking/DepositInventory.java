@@ -5,7 +5,7 @@ import java.util.concurrent.Callable;
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Condition;
 import org.qosmiof2.cooker.gui.Gui;
-import org.qosmiof2.cooker.nodes.Node;
+import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class DepositInventory extends Node{
 

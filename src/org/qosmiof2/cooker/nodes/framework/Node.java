@@ -1,4 +1,4 @@
-package org.qosmiof2.cooker.nodes;
+package org.qosmiof2.cooker.nodes.framework;
 
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.methods.MethodProvider;

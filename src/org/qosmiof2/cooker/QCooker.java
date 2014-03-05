@@ -16,7 +16,7 @@ import org.powerbot.script.methods.Skills;
 import org.powerbot.script.util.Random;
 import org.powerbot.script.util.Timer;
 import org.qosmiof2.cooker.gui.Gui;
-import org.qosmiof2.cooker.nodes.Node;
+import org.qosmiof2.cooker.nodes.framework.Node;
 
 @Manifest(description = "Cooks anything (almost)", name = "AIO Cooker", authors = "Qosmiof2")
 public class QCooker extends PollingScript implements MessageListener,
@@ -32,6 +32,10 @@ public class QCooker extends PollingScript implements MessageListener,
 
 	public static void setStatus(String status) {
 		QCooker.status = status;
+	}
+
+	public static void setFishLeft(int fishLeft) {
+		QCooker.fishLeft = fishLeft;
 	}
 
 	private Timer runTime = new Timer(0);

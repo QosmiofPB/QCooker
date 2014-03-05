@@ -6,7 +6,7 @@ import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Condition;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.gui.Gui;
-import org.qosmiof2.cooker.nodes.Node;
+import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class OpenBank extends Node {
 
@@ -39,6 +39,13 @@ public class OpenBank extends Node {
 				}, 500, 2);
 			}
 
+		} else {
+			ctx.movement.stepTowards(ctx.bank.getNearest().getLocation());
+			Condition.wait(new Callable<Boolean>() {
+				public Boolean call() throws Exception {
+					return ctx.bank.isInViewport();
+				}
+			}, 1000, 2);
 		}
 
 	}

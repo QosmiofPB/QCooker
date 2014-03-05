@@ -1,7 +1,8 @@
-package org.qosmiof2.cooker.nodes;
+package org.qosmiof2.cooker.nodes.antiban;
 
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Random;
+import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class Wait extends Node {
 

@@ -1,4 +1,4 @@
-package org.qosmiof2.cooker.nodes;
+package org.qosmiof2.cooker.nodes.cooking;
 
 import java.util.concurrent.Callable;
 
@@ -9,6 +9,7 @@ import org.powerbot.script.wrappers.Item;
 import org.powerbot.script.wrappers.Tile;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.gui.Gui;
+import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class Cook extends Node {
 
