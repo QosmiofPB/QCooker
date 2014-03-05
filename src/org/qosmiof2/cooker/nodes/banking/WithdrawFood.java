@@ -35,7 +35,7 @@ public class WithdrawFood extends Node {
 		}
 
 		if (!ctx.backpack.select().id(rawFood).isEmpty()) {
-			QCooker.setFishLeft(ctx.bank.id(rawFood).count());
+			QCooker.setFishLeft(ctx.bank.select().id(rawFood).count(true));
 			ctx.bank.close();
 			Condition.wait(new Callable<Boolean>() {
 				public Boolean call() throws Exception {

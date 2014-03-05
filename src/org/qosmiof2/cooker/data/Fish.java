@@ -1,10 +1,10 @@
 package org.qosmiof2.cooker.data;
 
 public enum Fish {
-	Beef("Beef", 2132, 2146),
-	Chicken("Chicken", 2138, 2144),
-	CRAYFISH("Crayfish", 13435, 13437),
 	SHRIMP("Shrimp", 317, 7954),
+	BEEF("Beef", 2132, 2146),
+	CHICKEN("Chicken", 2138, 2144),
+	CRAYFISH("Crayfish", 13435, 13437),
 	ANCHOVIES("Anchovies", 321, 323),
 	SARDINE("Sardine", 327, 0),
 	SALMON("Salmon", 331, 0),

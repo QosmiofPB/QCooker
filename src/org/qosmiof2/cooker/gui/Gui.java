@@ -15,7 +15,7 @@ import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.nodes.antiban.Wait;
 import org.qosmiof2.cooker.nodes.banking.*;
-import org.qosmiof2.cooker.nodes.cooking.Cook;
+import org.qosmiof2.cooker.nodes.cooking.*;
 
 public class Gui extends MethodProvider {
 
@@ -34,7 +34,7 @@ public class Gui extends MethodProvider {
 
 	public void init() {
 
-		frame.setBounds(300, 150, 250, 260);
+		frame.setBounds(300, 150, 255, 240);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 		frame.add(panel);
@@ -63,6 +63,8 @@ public class Gui extends MethodProvider {
 				QCooker.nodes.add(new WithdrawFood(ctx));
 				QCooker.nodes.add(new Cook(ctx));
 				QCooker.nodes.add(new Wait(ctx));
+				QCooker.nodes.add(new WalkToRange(ctx));
+				QCooker.nodes.add(new PressButton(ctx));
 				frame.dispose();
 			}
 

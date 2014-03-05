@@ -27,9 +27,9 @@ public class OpenBank extends Node {
 
 	@Override
 	public void execute() {
-		QCooker.setStatus("Opening bank...");
 
 		if (ctx.bank.isInViewport()) {
+			QCooker.setStatus("Opening bank...");
 			if (!ctx.bank.isOpen()) {
 				ctx.bank.open();
 				Condition.wait(new Callable<Boolean>() {
@@ -40,6 +40,7 @@ public class OpenBank extends Node {
 			}
 
 		} else {
+			QCooker.setStatus("Walking to bank...");
 			ctx.movement.stepTowards(ctx.bank.getNearest().getLocation());
 			Condition.wait(new Callable<Boolean>() {
 				public Boolean call() throws Exception {
