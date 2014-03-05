@@ -23,8 +23,7 @@ public class Cook extends Node {
 
 	@Override
 	public boolean activate() {
-		final GameObject range = ctx.objects.select().nearest().id(rangeId)
-				.first().poll();
+		final GameObject range = ctx.objects.select().id(rangeId).nearest().poll();
 		rawFood = Gui.food.getRawId();
 		return !ctx.backpack.select().id(rawFood).isEmpty()
 				&& ctx.players.local().getAnimation() == -1

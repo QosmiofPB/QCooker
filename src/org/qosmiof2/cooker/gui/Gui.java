@@ -13,9 +13,9 @@ import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.methods.MethodProvider;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.data.Fish;
-import org.qosmiof2.cooker.nodes.Bank;
 import org.qosmiof2.cooker.nodes.Cook;
-
+import org.qosmiof2.cooker.nodes.Wait;
+import org.qosmiof2.cooker.nodes.banking.*;
 public class Gui extends MethodProvider {
 
 	private JFrame frame = new JFrame("QCooker");
@@ -57,8 +57,12 @@ public class Gui extends MethodProvider {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				food = (Fish) cb.getSelectedItem();
-				QCooker.nodes.add(new Bank(ctx));
+				QCooker.nodes.add(new CloseBank(ctx));
+				QCooker.nodes.add(new DepositInventory(ctx));
+				QCooker.nodes.add(new CloseBank(ctx));
+				QCooker.nodes.add(new WithdrawFood(ctx));
 				QCooker.nodes.add(new Cook(ctx));
+				QCooker.nodes.add(new Wait(ctx));
 				frame.dispose();
 			}
 

@@ -96,7 +96,7 @@ public class QCooker extends PollingScript implements MessageListener,
 		g.drawLine(x - 10, y - 10, x + 10, y + 10);
 
 		g.setFont(font);
-		g.setColor(Color.green);
+		g.setColor(Color.MAGENTA);
 		g.drawRect(1, 1, 300, 170);
 		g.setColor(Color.black);
 		g.fillRect(2, 2, 298, 168);
