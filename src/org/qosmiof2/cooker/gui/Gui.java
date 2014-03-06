@@ -3,6 +3,7 @@ package org.qosmiof2.cooker.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -13,7 +14,7 @@ import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.methods.MethodProvider;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.data.Fish;
-import org.qosmiof2.cooker.nodes.antiban.Wait;
+import org.qosmiof2.cooker.nodes.antiban.*;
 import org.qosmiof2.cooker.nodes.banking.*;
 import org.qosmiof2.cooker.nodes.cooking.*;
 
@@ -21,10 +22,11 @@ public class Gui extends MethodProvider {
 
 	private JFrame frame = new JFrame("QCooker");
 	private JPanel panel = new JPanel();
-	private JButton button = new JButton();
-	private JLabel label = new JLabel();
+	private JButton startButton = new JButton();
+	private JLabel selectFishLabel = new JLabel();
 	private JComboBox<Fish> cb = new JComboBox<>(Fish.values());
-
+	private GroupLayout layout = new GroupLayout(panel);
+	
 	public static Fish food;
 
 	public Gui(MethodContext ctx) {
@@ -40,20 +42,20 @@ public class Gui extends MethodProvider {
 		frame.add(panel);
 		frame.setResizable(false);
 
-		panel.setLayout(null);
-		panel.add(button);
-		panel.add(label);
+		panel.setLayout(layout);
+		panel.add(startButton);
+		panel.add(selectFishLabel);
 		panel.add(cb);
 
-		label.setBounds(10, 10, 230, 50);
-		label.setText("Please select the fish you want to cook:");
+		selectFishLabel.setBounds(10, 10, 230, 50);
+		selectFishLabel.setText("Please select the fish you want to cook:");
 
 		cb.setBounds(10, 50, 230, 50);
 
-		button.setText("Start");
-		button.setBounds(10, 130, 230, 50);
+		startButton.setText("Start");
+		startButton.setBounds(10, 130, 230, 50);
 
-		button.addActionListener(new ActionListener() {
+		startButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -65,6 +67,7 @@ public class Gui extends MethodProvider {
 				QCooker.nodes.add(new Wait(ctx));
 				QCooker.nodes.add(new WalkToRange(ctx));
 				QCooker.nodes.add(new PressButton(ctx));
+				QCooker.nodes.add(new LogOut(ctx));
 				frame.dispose();
 			}
 

@@ -26,7 +26,7 @@ public class WithdrawFood extends Node {
 	@Override
 	public void execute() {
 		if (ctx.backpack.select().id(rawFood).isEmpty()) {
-			ctx.bank.withdraw(rawFood, 28);
+			ctx.bank.withdraw(rawFood, org.powerbot.script.methods.Bank.Amount.ALL);
 			Condition.wait(new Callable<Boolean>() {
 				public Boolean call() throws Exception {
 					return !ctx.backpack.select().id(rawFood).isEmpty();

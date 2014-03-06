@@ -4,15 +4,18 @@ import java.util.concurrent.Callable;
 
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Condition;
+import org.powerbot.script.util.Random;
 import org.powerbot.script.wrappers.GameObject;
 import org.powerbot.script.wrappers.Tile;
 import org.qosmiof2.cooker.QCooker;
+import org.qosmiof2.cooker.gui.Gui;
 import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class WalkToRange extends Node {
 
 	private Tile rangeTile = new Tile(3274, 3183, 0);
 	private int rangeId = 2772;
+	private int rawFood;
 
 	public WalkToRange(MethodContext ctx) {
 		super(ctx);
@@ -20,22 +23,25 @@ public class WalkToRange extends Node {
 
 	@Override
 	public boolean activate() {
-		final GameObject range = ctx.objects.select().nearest().id(rangeId)
-				.poll();
+		rawFood = Gui.food.getRawId();
+		final GameObject range = ctx.objects.select().id(rangeId).nearest()
+				.first().poll();
 		return ctx.players.local().getAnimation() == -1
-				&& !range.isInViewport();
+				&& !range.isInViewport()
+				&& !ctx.backpack.select().id(rawFood).isEmpty();
 	}
 
 	@Override
 	public void execute() {
-		final GameObject range = ctx.objects.select().nearest().id(rangeId)
+		final GameObject range = ctx.objects.select().id(rangeId).first()
 				.poll();
 		QCooker.setStatus("Walking to range...");
-		ctx.movement.stepTowards(rangeTile);
+		ctx.movement.stepTowards(new Tile((rangeTile.getLocation().getX() +- Random.nextInt(1, 5)),
+				(rangeTile.getLocation().getY() + Random.nextInt(1, 5)), 0));
 		Condition.wait(new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return range.isInViewport();
 			}
-		}, 1000, 3);
+		}, 1000, 2);
 	}
 }

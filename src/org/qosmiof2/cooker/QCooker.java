@@ -63,6 +63,7 @@ public class QCooker extends PollingScript implements MessageListener,
 				return Random.nextInt(200, 550);
 			}
 		}
+		
 		return 100;
 	}
 

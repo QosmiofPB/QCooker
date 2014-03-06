@@ -21,7 +21,7 @@ public class Cook extends Node {
 
 	@Override
 	public boolean activate() {
-		final GameObject range = ctx.objects.select().id(rangeId).nearest()
+		final GameObject range = ctx.objects.select().id(rangeId).nearest().first()
 				.poll();
 		rawFood = Gui.food.getRawId();
 		return !ctx.backpack.select().id(rawFood).isEmpty()
@@ -35,7 +35,7 @@ public class Cook extends Node {
 
 	@Override
 	public void execute() {
-		final GameObject range = ctx.objects.select().nearest().id(rangeId)
+		final GameObject range = ctx.objects.select().id(rangeId).nearest().first()
 				.poll();
 		if (range.isInViewport()) {
 			QCooker.setStatus("Cooking...");
@@ -52,6 +52,13 @@ public class Cook extends Node {
 
 				}
 			}
+		} else {
+			ctx.camera.turnTo(range.getLocation());
+			Condition.wait(new Callable<Boolean>() {
+				public Boolean call() throws Exception {
+					return range.isInViewport();
+				}
+			}, 500, 2);
+			}
 		}
-	}
 }
