@@ -27,7 +27,8 @@ public class WalkToRange extends Node {
 				.first().poll();
 		return ctx.players.local().getAnimation() == -1
 				&& !range.isInViewport()
-				&& !ctx.backpack.select().id(rawFood).isEmpty();
+				&& !ctx.backpack.select().id(rawFood).isEmpty()
+				&& !range.isOnScreen();
 	}
 
 	@Override
@@ -38,8 +39,17 @@ public class WalkToRange extends Node {
 		ctx.movement.stepTowards(new Tile((Gui.location.getX() +- Random.nextInt(1, 5)), (Gui.location.getY() +- Random.nextInt(1, 5)), Gui.location.getZ()));
 		Condition.wait(new Callable<Boolean>() {
 			public Boolean call() throws Exception {
-				return range.isInViewport();
+				return range.isInViewport() && ctx.movement.getDistance(range, ctx.players.local().getLocation()) <= 10;
 			}
 		}, 1000, 2);
+		
+		if(range.isOnScreen()){
+			ctx.camera.turnTo(range.getLocation());
+			Condition.wait(new Callable<Boolean>() {
+				public Boolean call() throws Exception {
+					return range.isOnScreen();
+				}
+			}, 500, 2);
+		}
 	}
 }

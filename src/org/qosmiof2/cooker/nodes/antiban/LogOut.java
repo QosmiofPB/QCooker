@@ -26,6 +26,7 @@ public class LogOut extends Node {
 
 	@Override
 	public void execute() {
+		System.out.println("Logging out!!");
 		ctx.game.logout(true);
 		Condition.wait(new Callable<Boolean>() {
 			public Boolean call() throws Exception {

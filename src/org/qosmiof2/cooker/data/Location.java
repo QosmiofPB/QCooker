@@ -4,10 +4,11 @@ public enum Location {
 	AL_KHARID("Al Kharid", 3274, 3183, 0),
 	EDGEVILLE("Edgeville", 3079, 3496, 0);
 	
-	private Location(String name, int x, int y, int floor) {
+	private Location(String name, int x, int y, int z) {
 		this.NAME = name;
 		this.X = x;
 		this.Y = y;
+		this.Z = z;
 	}
 	private String NAME;
 	private int X;
