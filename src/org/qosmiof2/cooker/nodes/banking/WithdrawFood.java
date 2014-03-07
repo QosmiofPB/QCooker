@@ -15,9 +15,11 @@ public class WithdrawFood extends Node {
 	}
 
 	private int rawFood;
+	private int cookedFood;
 
 	@Override
 	public boolean activate() {
+		cookedFood = Gui.food.getCookedId();
 		rawFood = Gui.food.getRawId();
 		return ctx.players.local().getAnimation() == -1 && ctx.bank.isOpen()
 				&& ctx.backpack.select().isEmpty();
@@ -36,6 +38,7 @@ public class WithdrawFood extends Node {
 
 		if (!ctx.backpack.select().id(rawFood).isEmpty()) {
 			QCooker.setFishLeft(ctx.bank.select().id(rawFood).count(true));
+			QCooker.setCookedFishInBank(ctx.bank.select().id(cookedFood).count(true));
 			ctx.bank.close();
 			Condition.wait(new Callable<Boolean>() {
 				public Boolean call() throws Exception {

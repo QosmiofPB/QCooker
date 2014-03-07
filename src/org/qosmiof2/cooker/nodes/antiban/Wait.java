@@ -2,6 +2,7 @@ package org.qosmiof2.cooker.nodes.antiban;
 
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Random;
+import org.powerbot.script.wrappers.Component;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.nodes.framework.Node;
 
@@ -11,9 +12,11 @@ public class Wait extends Node {
 		super(ctx);
 	}
 
+	private Component cookingComponent = ctx.widgets.get(1251, 11);
+	
 	@Override
 	public boolean activate() {
-		return ctx.widgets.get(1251, 11).isVisible()
+		return cookingComponent.isVisible()
 				&& ctx.players.local().getAnimation() == -1
 				&& ctx.players.local().isIdle();
 	}

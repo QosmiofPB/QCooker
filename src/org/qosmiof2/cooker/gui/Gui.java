@@ -15,9 +15,14 @@ import org.powerbot.script.methods.MethodProvider;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.data.Location;
-import org.qosmiof2.cooker.nodes.antiban.*;
-import org.qosmiof2.cooker.nodes.banking.*;
-import org.qosmiof2.cooker.nodes.cooking.*;
+import org.qosmiof2.cooker.nodes.antiban.LogOut;
+import org.qosmiof2.cooker.nodes.antiban.Wait;
+import org.qosmiof2.cooker.nodes.banking.DepositInventory;
+import org.qosmiof2.cooker.nodes.banking.OpenBank;
+import org.qosmiof2.cooker.nodes.banking.WithdrawFood;
+import org.qosmiof2.cooker.nodes.cooking.Cook;
+import org.qosmiof2.cooker.nodes.cooking.PressButton;
+import org.qosmiof2.cooker.nodes.cooking.WalkToRange;
 
 public class Gui extends MethodProvider {
 
@@ -31,7 +36,7 @@ public class Gui extends MethodProvider {
 	
 	public static Fish food;
 	public static Location location;
-	
+
 	public Gui(MethodContext ctx) {
 		super(ctx);
 		init();

@@ -43,8 +43,8 @@ public class WalkToRange extends Node {
 			}
 		}, 1000, 2);
 		
-		if(range.isOnScreen()){
-			ctx.camera.turnTo(range.getLocation());
+		if(!range.isOnScreen()){
+			ctx.camera.turnTo(range);
 			Condition.wait(new Callable<Boolean>() {
 				public Boolean call() throws Exception {
 					return range.isOnScreen();
