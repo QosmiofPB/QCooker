@@ -29,6 +29,7 @@ public class QCooker extends PollingScript implements MessageListener,
 	private int cooked;
 	private int burnt;
 	public static String status = "Waiting for input...";
+	public static String location = "Waiting for input...";
 
 	public static void setStatus(String status) {
 		QCooker.status = status;
@@ -102,9 +103,9 @@ public class QCooker extends PollingScript implements MessageListener,
 
 		g.setFont(font);
 		g.setColor(Color.MAGENTA);
-		g.drawRect(1, 1, 300, 170);
+		g.drawRect(1, 1, 300, 185);
 		g.setColor(Color.black);
-		g.fillRect(2, 2, 298, 168);
+		g.fillRect(2, 2, 299, 184);
 		g.setColor(Color.white);
 		g.drawString("Level: " + ctx.skills.getLevel(Skills.COOKING) + "("
 				+ (ctx.skills.getLevel(Skills.COOKING) - startLvl) + ")", 10,
@@ -114,9 +115,10 @@ public class QCooker extends PollingScript implements MessageListener,
 				+ ((ctx.skills.getExperienceAt(lvl + 1) - exp)) + ")", 10, 50);
 		g.drawString("Running: " + runTime.toElapsedString(), 10, 70);
 		g.drawString("Status: " + status, 10, 90);
-		g.drawString("Cooked: " + cooked, 10, 110);
-		g.drawString("Burnt: " + burnt, 10, 130);
-		g.drawString("Fish left in bank: " + fishLeft , 10, 150);
+		g.drawString("Cooked: " + cooked, 10, 130);
+		g.drawString("Burnt: " + burnt, 10, 150);
+		g.drawString("Fish left in bank: " + fishLeft , 10, 170);
+		g.drawString("Location: " + location, 10, 110);
 
 	}
 

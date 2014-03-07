@@ -20,7 +20,7 @@ public class LogOut extends Node {
 		rawFood = Gui.food.getRawId();
 		return ctx.bank.select().id(rawFood).isEmpty()
 				&& ctx.backpack.select().id(rawFood).isEmpty()
-				&& !ctx.bank.isOpen()
+				&& ctx.bank.isOpen()
 				&& ctx.players.local().getAnimation() == -1;
 	}
 

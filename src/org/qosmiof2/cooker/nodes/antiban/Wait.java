@@ -2,6 +2,7 @@ package org.qosmiof2.cooker.nodes.antiban;
 
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Random;
+import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class Wait extends Node {
@@ -19,12 +20,9 @@ public class Wait extends Node {
 
 	@Override
 	public void execute() {
+		QCooker.setStatus("Cooking...");
 		do {
 			switch (Random.nextInt(0, 25)) {
-
-			default:
-				sleep(700, 2000);
-				break;
 
 			case 1: // Moves mouse randomly
 				ctx.mouse.move(Random.nextInt(0, 800), Random.nextInt(0, 600));
@@ -47,6 +45,10 @@ public class Wait extends Node {
 			case 7:// Looks like you opened another tab/program/skype/etc...
 				ctx.mouse.move(Random.nextInt(0, 800), 600);
 				sleep(1000, 2000);
+				break;
+
+			default:
+				sleep(700, 2000);
 				break;
 
 			}

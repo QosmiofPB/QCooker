@@ -13,7 +13,6 @@ import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class WalkToRange extends Node {
 
-	private Tile rangeTile = new Tile(3274, 3183, 0);
 	private int rangeId = 2772;
 	private int rawFood;
 
@@ -36,8 +35,7 @@ public class WalkToRange extends Node {
 		final GameObject range = ctx.objects.select().id(rangeId).first()
 				.poll();
 		QCooker.setStatus("Walking to range...");
-		ctx.movement.stepTowards(new Tile((rangeTile.getLocation().getX() +- Random.nextInt(1, 5)),
-				(rangeTile.getLocation().getY() + Random.nextInt(1, 5)), 0));
+		ctx.movement.stepTowards(new Tile((Gui.location.getX() +- Random.nextInt(1, 5)), (Gui.location.getY() +- Random.nextInt(1, 5)), Gui.location.getZ()));
 		Condition.wait(new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return range.isInViewport();
