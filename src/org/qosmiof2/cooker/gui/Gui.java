@@ -2,6 +2,7 @@ package org.qosmiof2.cooker.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -23,6 +24,7 @@ import org.qosmiof2.cooker.nodes.banking.WithdrawFood;
 import org.qosmiof2.cooker.nodes.cooking.Cook;
 import org.qosmiof2.cooker.nodes.cooking.PressButton;
 import org.qosmiof2.cooker.nodes.cooking.WalkToRange;
+import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class Gui extends MethodProvider {
 
