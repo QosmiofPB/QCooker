@@ -7,9 +7,8 @@ import org.powerbot.script.util.Condition;
 import org.powerbot.script.wrappers.Component;
 import org.powerbot.script.wrappers.GameObject;
 import org.powerbot.script.wrappers.Item;
-import org.powerbot.script.wrappers.Widget;
 import org.qosmiof2.cooker.QCooker;
-import org.qosmiof2.cooker.gui.Gui;
+import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class Cook extends Node {
@@ -17,16 +16,19 @@ public class Cook extends Node {
 	private int rawFood;
 	private int rangeId = 2772;
 	private Component buttonComponent = ctx.widgets.get(1370, 38);
+	
+	private Fish food;
 
-	public Cook(MethodContext ctx) {
+	public Cook(MethodContext ctx, Fish food) {
 		super(ctx);
+		this.food = food;
 	}
 	
 	@Override
 	public boolean activate() {
 		final GameObject range = ctx.objects.select().id(rangeId).nearest().first()
 				.poll();
-		rawFood = Gui.food.getRawId();
+		rawFood = food.getRawId();
 		return !ctx.backpack.select().id(rawFood).isEmpty()
 				&& ctx.players.local().getAnimation() == -1
 				&& ctx.players.local().isIdle()
@@ -40,7 +42,7 @@ public class Cook extends Node {
 	public void execute() {
 		final GameObject range = ctx.objects.select().id(rangeId).nearest().first()
 				.poll();
-		if (range.isOnScreen()) {
+		if (range.isInViewport()) {
 			QCooker.setStatus("Cooking...");
 			final Item food = ctx.backpack.select().id(rawFood).first().poll();
 

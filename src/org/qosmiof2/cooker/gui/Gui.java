@@ -35,8 +35,8 @@ public class Gui extends MethodProvider {
 	private JComboBox<Location> locationCb = new JComboBox<>(Location.values());
 	private GroupLayout layout = new GroupLayout(panel);
 	
-	public static Fish food;
-	public static Location location;
+	public Fish food;
+	public Location location;
 
 	public Gui(MethodContext ctx) {
 		super(ctx);
@@ -74,15 +74,15 @@ public class Gui extends MethodProvider {
 			public void actionPerformed(ActionEvent arg0) {
 				food = (Fish) cb.getSelectedItem();
 				location = (Location) locationCb.getSelectedItem();
-				QCooker.nodes.add(new DepositInventory(ctx));
-				QCooker.nodes.add(new OpenBank(ctx));
-				QCooker.nodes.add(new WithdrawFood(ctx));
-				QCooker.nodes.add(new Cook(ctx));
+				QCooker.nodes.add(new DepositInventory(ctx, food));
+				QCooker.nodes.add(new OpenBank(ctx, food));
+				QCooker.nodes.add(new WithdrawFood(ctx, food));
+				QCooker.nodes.add(new Cook(ctx, food));
 				QCooker.nodes.add(new Wait(ctx));
-				QCooker.nodes.add(new WalkToRange(ctx));
+				QCooker.nodes.add(new WalkToRange(ctx, food, location));
 				QCooker.nodes.add(new PressButton(ctx));
-				QCooker.nodes.add(new LogOut(ctx));
-				QCooker.nodes.add(new CloseBank(ctx));
+				QCooker.nodes.add(new LogOut(ctx, food));
+				QCooker.nodes.add(new CloseBank(ctx, food));
 				frame.dispose();
 			}
 
