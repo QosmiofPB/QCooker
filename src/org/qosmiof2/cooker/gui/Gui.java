@@ -17,7 +17,6 @@ import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.data.Location;
 import org.qosmiof2.cooker.nodes.antiban.LogOut;
 import org.qosmiof2.cooker.nodes.antiban.Wait;
-import org.qosmiof2.cooker.nodes.banking.CloseBank;
 import org.qosmiof2.cooker.nodes.banking.DepositInventory;
 import org.qosmiof2.cooker.nodes.banking.OpenBank;
 import org.qosmiof2.cooker.nodes.banking.WithdrawFood;
@@ -82,7 +81,6 @@ public class Gui extends MethodProvider {
 				QCooker.nodes.add(new WalkToRange(ctx, food, location));
 				QCooker.nodes.add(new PressButton(ctx));
 				QCooker.nodes.add(new LogOut(ctx, food));
-				QCooker.nodes.add(new CloseBank(ctx, food));
 				frame.dispose();
 			}
 
