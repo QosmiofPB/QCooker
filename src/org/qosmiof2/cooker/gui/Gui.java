@@ -2,7 +2,6 @@ package org.qosmiof2.cooker.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -18,13 +17,13 @@ import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.data.Location;
 import org.qosmiof2.cooker.nodes.antiban.LogOut;
 import org.qosmiof2.cooker.nodes.antiban.Wait;
+import org.qosmiof2.cooker.nodes.banking.CloseBank;
 import org.qosmiof2.cooker.nodes.banking.DepositInventory;
 import org.qosmiof2.cooker.nodes.banking.OpenBank;
 import org.qosmiof2.cooker.nodes.banking.WithdrawFood;
 import org.qosmiof2.cooker.nodes.cooking.Cook;
 import org.qosmiof2.cooker.nodes.cooking.PressButton;
 import org.qosmiof2.cooker.nodes.cooking.WalkToRange;
-import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class Gui extends MethodProvider {
 
@@ -46,7 +45,8 @@ public class Gui extends MethodProvider {
 
 	public void init() {
 
-		frame.setBounds(300, 150, 255, 270);
+		frame.setLocation(300, 150);
+		frame.setSize(255, 270);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 		frame.add(panel);
@@ -82,7 +82,7 @@ public class Gui extends MethodProvider {
 				QCooker.nodes.add(new WalkToRange(ctx));
 				QCooker.nodes.add(new PressButton(ctx));
 				QCooker.nodes.add(new LogOut(ctx));
-				QCooker.location = location.getNAME();
+				QCooker.nodes.add(new CloseBank(ctx));
 				frame.dispose();
 			}
 
