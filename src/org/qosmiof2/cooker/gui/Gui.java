@@ -28,7 +28,7 @@ import org.qosmiof2.cooker.nodes.make.Make;
 
 public class Gui extends MethodProvider {
 
-	public Fish food;
+	public static Fish food;
 	public Location location;
 	public Other other;
 
@@ -60,6 +60,7 @@ public class Gui extends MethodProvider {
 
 		tp.add("Cook", panelCook);
 		tp.add("Make", panelMake);
+	
 
 	}
 
@@ -69,6 +70,9 @@ public class Gui extends MethodProvider {
 		panelCook.add(cbCook);
 		panelCook.add(cbLoc);
 
+		cbCook.setBounds(5, 5, 100, 30);
+		cbLoc.setBounds(120, 5, 100, 30);
+		
 		buttonCook.setBounds(120, 50, 100, 30);
 		buttonCook.addActionListener(new ActionListener() {
 
@@ -78,19 +82,21 @@ public class Gui extends MethodProvider {
 				QCooker.nodes.add(new PressButton(ctx));
 				QCooker.nodes.add(new WalkToRange(ctx, food, location));
 				QCooker.nodes.add(new CloseBank(ctx, food));
-				QCooker.nodes.add(new DepositInventory(ctx, food, other, null));
+				QCooker.nodes.add(new DepositInventory(ctx, food, other, Gui.this));
 				QCooker.nodes.add(new OpenBank(ctx, food, location));
 				QCooker.nodes.add(new WalkToBank(ctx, food, location));
-				QCooker.nodes.add(new WithdrawFood(ctx, food, null, other));
+				QCooker.nodes.add(new WithdrawFood(ctx, food, Gui.this, other));
 				food = (Fish) cbCook.getSelectedItem();
 				location = (Location) cbLoc.getSelectedItem();
 				frame.dispose();
+				
+				System.out.println(food.getRawId());
 
 			}
 
 		});
-		cbCook.setBounds(5, 5, 100, 30);
-		cbLoc.setBounds(120, 5, 100, 30);
+		
+
 
 	}
 
@@ -105,10 +111,10 @@ public class Gui extends MethodProvider {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				QCooker.nodes.add(new CloseBank(ctx, food));
-				QCooker.nodes.add(new DepositInventory(ctx, food, other, null));
+				QCooker.nodes.add(new DepositInventory(ctx, food, other, Gui.this));
 				QCooker.nodes.add(new OpenBank(ctx, food, location));
 				QCooker.nodes.add(new WalkToBank(ctx, food, location));
-				QCooker.nodes.add(new WithdrawFood(ctx, food, null, other));
+				QCooker.nodes.add(new WithdrawFood(ctx, food, Gui.this, other));
 				QCooker.nodes.add(new Make(ctx, other));
 				other = (Other) cbMake.getSelectedItem();
 				makingPizza = true;
@@ -118,6 +124,7 @@ public class Gui extends MethodProvider {
 			}
 
 		});
+		
 		cbMake.setBounds(5, 5, 150, 30);
 	}
 }
