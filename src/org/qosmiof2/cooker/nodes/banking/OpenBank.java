@@ -6,16 +6,19 @@ import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Condition;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.data.Fish;
+import org.qosmiof2.cooker.data.Location;
 import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class OpenBank extends Node {
 
 	private int rawFood;
 	private Fish food;
+	private Location location;
 
-	public OpenBank(MethodContext ctx, Fish food) {
+	public OpenBank(MethodContext ctx, Fish food, Location location) {
 		super(ctx);
 		this.food = food;
+		this.location = location;
 	}
 
 	@Override
@@ -24,7 +27,9 @@ public class OpenBank extends Node {
 		return ctx.backpack.select().id(rawFood).first().isEmpty()
 				&& ctx.players.local().isIdle()
 				&& ctx.players.local().getAnimation() == -1
-				&& !ctx.bank.isOpen();
+				&& !ctx.bank.isOpen()
+				&& ctx.movement.getDistance(ctx.bank.getNearest(), ctx.players
+						.local().getLocation()) < 10;
 	}
 
 	@Override
@@ -35,20 +40,13 @@ public class OpenBank extends Node {
 			if (!ctx.bank.isOpen()) {
 				ctx.bank.open();
 				Condition.wait(new Callable<Boolean>() {
+					@Override
 					public Boolean call() throws Exception {
 						return ctx.bank.isOpen();
 					}
 				}, 500, 2);
 			}
 
-		} else {
-			QCooker.setStatus("Walking to bank...");
-			ctx.movement.stepTowards(ctx.bank.getNearest().getLocation());
-			Condition.wait(new Callable<Boolean>() {
-				public Boolean call() throws Exception {
-					return ctx.bank.isInViewport();
-				}
-			}, 1000, 2);
 		}
 
 	}

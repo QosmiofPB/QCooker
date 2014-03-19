@@ -26,6 +26,7 @@ public class PressButton extends Node{
 	public void execute() {
 		buttonComponent.click();
 		Condition.wait(new Callable<Boolean>() {
+			@Override
 			public Boolean call() throws Exception {
 				return cookingComponent.isVisible();
 			}

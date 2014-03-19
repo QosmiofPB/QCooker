@@ -13,7 +13,7 @@ public class Wait extends Node {
 	}
 
 	private Component cookingComponent = ctx.widgets.get(1251, 11);
-	
+
 	@Override
 	public boolean activate() {
 		return cookingComponent.isVisible()
@@ -32,7 +32,7 @@ public class Wait extends Node {
 				break;
 
 			case 18:
-				ctx.camera.setAngle(Random.nextInt(1, 99));
+				ctx.camera.setPitch(Random.nextInt(70, 99));
 				break;
 
 			case 5:
@@ -49,6 +49,10 @@ public class Wait extends Node {
 				ctx.mouse.move(Random.nextInt(0, 800), 600);
 				sleep(1000, 2000);
 				break;
+				
+			case 14:
+				ctx.camera.setAngle(Random.nextInt(30, 90));
+				break;
 
 			default:
 				sleep(700, 2000);
@@ -58,5 +62,4 @@ public class Wait extends Node {
 		} while (ctx.widgets.get(1251, 11).isVisible());
 
 	}
-
 }

@@ -49,16 +49,28 @@ public class Cook extends Node {
 			if (food.interact("Use") && !buttonComponent.isVisible()) {
 				if (range.interact("Use") && !buttonComponent.isVisible()) {
 					Condition.wait(new Callable<Boolean>() {
+						@Override
 						public Boolean call() throws Exception {
 							return buttonComponent.isVisible();
 						}
 					}, 1000, 2);
 
+				} else {
+					ctx.camera.turnTo(range);
+					ctx.camera.setPitch(99);
+					Condition.wait(new Callable<Boolean>() {
+						@Override
+						public Boolean call() throws Exception {
+							return range.isInViewport();
+						}
+					}, 1000, 2);
 				}
 			}
 		} else {
 			ctx.camera.turnTo(range);
+			ctx.camera.setPitch(99);
 			Condition.wait(new Callable<Boolean>() {
+				@Override
 				public Boolean call() throws Exception {
 					return range.isInViewport();
 				}
