@@ -56,8 +56,9 @@ public class Gui extends MethodProvider {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(250, 150);
 		frame.setVisible(true);
+		frame.setResizable(false);
 		frame.add(tp);
-
+		
 		panelCook();
 		panelMake();
 
