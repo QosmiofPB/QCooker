@@ -17,7 +17,7 @@ public class Wait extends Node {
 	@Override
 	public boolean activate() {
 		return cookingComponent.isVisible()
-				&& ctx.players.local().getAnimation() == -1
+				&& ctx.players.local().getAnimation() != -1
 				&& ctx.players.local().isIdle();
 	}
 

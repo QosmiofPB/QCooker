@@ -107,21 +107,21 @@ public class QCooker extends PollingScript implements MessageListener,
 //		expPH = (int) (expGained * (3600000D/runTime.getElapsed()));
 //		expTNL = (ctx.skills.getExperienceAt(lvl + 1) - exp); 
 //		
-//		x = ctx.mouse.getLocation().x;
-//		y = ctx.mouse.getLocation().y;
-//
-//		Graphics2D g = (Graphics2D) g1;
-//
-//		//Mouse
-//		g.setColor(Color.black);
-//		g.drawLine(x - 1000, y, x + 1000, y);
-//		g.drawLine(x, y -1000, x, y +1000);
-//		
-//		g.setColor(Color.red);
-//		g.drawOval(x-4, y-4, 8, 8);
-//		g.setColor(orange);
-//		g.fillOval(x-3, y-3, 7, 7);
-//		g.setColor(Color.black);
+		x = ctx.mouse.getLocation().x;
+		y = ctx.mouse.getLocation().y;
+
+		Graphics2D g = (Graphics2D) g1;
+
+		//Mouse
+		g.setColor(Color.black);
+		g.drawLine(x - 1000, y, x + 1000, y);
+		g.drawLine(x, y -1000, x, y +1000);
+		
+		g.setColor(Color.red);
+		g.drawOval(x-4, y-4, 8, 8);
+		g.setColor(orange);
+		g.fillOval(x-3, y-3, 7, 7);
+		g.setColor(Color.black);
 //
 //		if (showPaint) {
 //			g.setFont(font);

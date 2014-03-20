@@ -23,7 +23,7 @@ public class WithdrawFood extends Node {
 		this.other = other;
 	}
 
-	private int rawFood, pizzaBaseId, tomatoId, cheeseId;
+	private int rawFood, pizzaBaseId, tomatoId, cheeseId, id;
 
 	@Override
 	public boolean activate() {
@@ -37,52 +37,59 @@ public class WithdrawFood extends Node {
 
 	@Override
 	public void execute() {
-		if (gui.makingPizza = false) {
-			ctx.bank.withdraw(rawFood,
-					org.powerbot.script.methods.Bank.Amount.ALL);
-			Condition.wait(new Callable<Boolean>() {
-				@Override
-				public Boolean call() throws Exception {
-					return !ctx.backpack.select().id(rawFood).isEmpty();
-				}
-			}, 500, 2);
-			if (!ctx.backpack.select().id(rawFood).isEmpty()) {
-				QCooker.setStatus("Closing bank...");
-				ctx.bank.close();
-				Condition.wait(new Callable<Boolean>() {
-					@Override
-					public Boolean call() throws Exception {
-						return !ctx.bank.isOpen();
-					}
-				}, 500, 2);
-			}
+		if (gui.makingPizza) {
+			withdrawStuffMake();
 		} else {
-			ctx.bank.withdraw(pizzaBaseId, 9);
-			ctx.bank.withdraw(cheeseId, 9);
-			ctx.bank.withdraw(tomatoId, 9);
-			Condition.wait(new Callable<Boolean>() {
-				@Override
-				public Boolean call() throws Exception {
-					return !ctx.backpack.select().id(pizzaBaseId).isEmpty()
-							&& !ctx.backpack.select().id(tomatoId).isEmpty()
-							&& !ctx.backpack.select().id(cheeseId).isEmpty();
-				}
-			}, 500, 2);
-			if (!ctx.backpack.select().id(pizzaBaseId).isEmpty()
-					&& !ctx.backpack.select().id(tomatoId).isEmpty()
-					&& !ctx.backpack.select().id(cheeseId).isEmpty()) {
-				QCooker.setStatus("Closing bank...");
-				ctx.bank.close();
-				Condition.wait(new Callable<Boolean>() {
-					@Override
-					public Boolean call() throws Exception {
-						return !ctx.bank.isOpen();
-					}
-				}, 500, 2);
-			}
-			
+			withdrawRawFood();
 		}
 
+	}
+
+	private void withdrawStuffMake() {
+		ctx.bank.withdraw(pizzaBaseId, 9);
+		ctx.bank.withdraw(cheeseId, 9);
+		ctx.bank.withdraw(tomatoId, 9);
+		Condition.wait(new Callable<Boolean>() {
+			@Override
+			public Boolean call() throws Exception {
+				return !ctx.backpack.select().id(pizzaBaseId).isEmpty()
+						&& !ctx.backpack.select().id(tomatoId).isEmpty()
+						&& !ctx.backpack.select().id(cheeseId).isEmpty();
+			}
+		}, 500, 2);
+		if (!ctx.backpack.select().id(pizzaBaseId).isEmpty()
+				&& !ctx.backpack.select().id(tomatoId).isEmpty()
+				&& !ctx.backpack.select().id(cheeseId).isEmpty()) {
+			QCooker.setStatus("Closing bank...");
+			ctx.bank.close();
+			Condition.wait(new Callable<Boolean>() {
+				@Override
+				public Boolean call() throws Exception {
+					return !ctx.bank.isOpen();
+				}
+			}, 500, 2);
+		}
+
+	}
+
+	private void withdrawRawFood() {
+		ctx.bank.withdraw(rawFood, org.powerbot.script.methods.Bank.Amount.ALL);
+		Condition.wait(new Callable<Boolean>() {
+			@Override
+			public Boolean call() throws Exception {
+				return !ctx.backpack.select().id(rawFood).isEmpty();
+			}
+		}, 500, 2);
+		if (!ctx.backpack.select().id(rawFood).isEmpty()) {
+			QCooker.setStatus("Closing bank...");
+			ctx.bank.close();
+			Condition.wait(new Callable<Boolean>() {
+				@Override
+				public Boolean call() throws Exception {
+					return !ctx.bank.isOpen();
+				}
+			}, 500, 2);
+		}
 	}
 
 }

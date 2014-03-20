@@ -16,6 +16,8 @@ import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.data.Location;
 import org.qosmiof2.cooker.data.Other;
+import org.qosmiof2.cooker.nodes.antiban.LogOut;
+import org.qosmiof2.cooker.nodes.antiban.Wait;
 import org.qosmiof2.cooker.nodes.banking.CloseBank;
 import org.qosmiof2.cooker.nodes.banking.DepositInventory;
 import org.qosmiof2.cooker.nodes.banking.OpenBank;
@@ -24,6 +26,7 @@ import org.qosmiof2.cooker.nodes.banking.WithdrawFood;
 import org.qosmiof2.cooker.nodes.cooking.Cook;
 import org.qosmiof2.cooker.nodes.cooking.PressButton;
 import org.qosmiof2.cooker.nodes.cooking.WalkToRange;
+import org.qosmiof2.cooker.nodes.make.AddCheese;
 import org.qosmiof2.cooker.nodes.make.Make;
 
 public class Gui extends MethodProvider {
@@ -78,16 +81,19 @@ public class Gui extends MethodProvider {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				food = (Fish) cbCook.getSelectedItem();
+				location = (Location) cbLoc.getSelectedItem();
+				other = (Other) cbMake.getSelectedItem();
 				QCooker.nodes.add(new Cook(ctx, food));
 				QCooker.nodes.add(new PressButton(ctx));
 				QCooker.nodes.add(new WalkToRange(ctx, food, location));
-				QCooker.nodes.add(new CloseBank(ctx, food));
+				QCooker.nodes.add(new CloseBank(ctx, food, Gui.this, other));
 				QCooker.nodes.add(new DepositInventory(ctx, food, other, Gui.this));
-				QCooker.nodes.add(new OpenBank(ctx, food, location));
+				QCooker.nodes.add(new OpenBank(ctx, food, location, other, Gui.this));
 				QCooker.nodes.add(new WalkToBank(ctx, food, location));
 				QCooker.nodes.add(new WithdrawFood(ctx, food, Gui.this, other));
-				food = (Fish) cbCook.getSelectedItem();
-				location = (Location) cbLoc.getSelectedItem();
+				QCooker.nodes.add(new Wait(ctx));
+				QCooker.nodes.add(new LogOut(ctx, food));
 				frame.dispose();
 				
 				System.out.println(food.getRawId());
@@ -110,17 +116,22 @@ public class Gui extends MethodProvider {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				QCooker.nodes.add(new CloseBank(ctx, food));
+				other = (Other) cbMake.getSelectedItem();
+				food = (Fish) cbCook.getSelectedItem();
+				location = (Location) cbLoc.getSelectedItem();
+				makingPizza = true;
+				QCooker.nodes.add(new CloseBank(ctx, food, Gui.this, other));
 				QCooker.nodes.add(new DepositInventory(ctx, food, other, Gui.this));
-				QCooker.nodes.add(new OpenBank(ctx, food, location));
+				QCooker.nodes.add(new OpenBank(ctx, food, location, other, Gui.this));
 				QCooker.nodes.add(new WalkToBank(ctx, food, location));
 				QCooker.nodes.add(new WithdrawFood(ctx, food, Gui.this, other));
 				QCooker.nodes.add(new Make(ctx, other));
-				other = (Other) cbMake.getSelectedItem();
-				makingPizza = true;
+				QCooker.nodes.add(new AddCheese(ctx, other));
+				QCooker.nodes.add(new Wait(ctx));
+				QCooker.nodes.add(new LogOut(ctx, food));
+
 				frame.dispose();
 				System.out.println(other.getId());
-
 			}
 
 		});

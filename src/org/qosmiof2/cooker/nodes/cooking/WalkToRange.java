@@ -32,7 +32,7 @@ public class WalkToRange extends Node {
 				&& !range.isInViewport()
 				&& !ctx.backpack.select().id(food.getRawId()).isEmpty()
 				&& ctx.players.local().isIdle()
-				&& ctx.movement.getDistance(range, ctx.players.local().getLocation()) > 5;
+				&& ctx.movement.getDistance(range, ctx.players.local().getLocation()) > 10;
 	}
 
 	@Override
