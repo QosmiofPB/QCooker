@@ -3,7 +3,9 @@ package org.qosmiof2.cooker.nodes.banking;
 import java.util.concurrent.Callable;
 
 import org.powerbot.script.methods.MethodContext;
+import org.powerbot.script.methods.Bank.Amount;
 import org.powerbot.script.util.Condition;
+import org.powerbot.script.util.Random;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.data.Other;
@@ -73,7 +75,15 @@ public class WithdrawFood extends Node {
 	}
 
 	private void withdrawRawFood() {
-		ctx.bank.withdraw(rawFood, org.powerbot.script.methods.Bank.Amount.ALL);
+		switch (Random.nextInt(0, 10)){
+		default:
+			ctx.bank.withdraw(rawFood, Amount.ALL);
+			break;
+			
+		case 5:
+			ctx.bank.withdraw(rawFood, 28);
+			break;
+		}		
 		Condition.wait(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
