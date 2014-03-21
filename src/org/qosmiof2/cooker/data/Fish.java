@@ -1,7 +1,5 @@
 package org.qosmiof2.cooker.data;
 
-import javax.swing.ComboBoxModel;
-
 public enum Fish {
 	Shrimp("Shrimp", 317, 7954, 315),
 	Beef("Beef", 2132, 2146, 2142),

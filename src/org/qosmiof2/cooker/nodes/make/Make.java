@@ -15,7 +15,7 @@ public class Make extends Node {
 
 	// Didn't know how to call this.... so Other haha
 
-	private int pizzaBaseId, tomatoId, cheeseId, incompletePizzaId;
+	private int pizzaBaseId, tomatoId, cheeseId;
 	private Component buttonComponent = ctx.widgets.get(1370, 38);
 
 	public Make(MethodContext ctx, Other other) {
@@ -28,7 +28,6 @@ public class Make extends Node {
 		pizzaBaseId = other.getPizzaBaseId();
 		tomatoId = other.getTomatoId();
 		cheeseId = other.getCheeseId();
-		incompletePizzaId = 2285;
 		return !ctx.bank.isOpen()
 				&& !ctx.backpack.select().id(pizzaBaseId).isEmpty()
 				&& !ctx.backpack.select().id(tomatoId).isEmpty()

@@ -90,7 +90,7 @@ public class Gui extends MethodProvider {
 				QCooker.nodes.add(new WalkToRange(ctx, food, location));
 				QCooker.nodes.add(new CloseBank(ctx, food, Gui.this, other));
 				QCooker.nodes.add(new DepositInventory(ctx, food, other, Gui.this));
-				QCooker.nodes.add(new OpenBank(ctx, food, location, other, Gui.this));
+				QCooker.nodes.add(new OpenBank(ctx, food, other, Gui.this));
 				QCooker.nodes.add(new WalkToBank(ctx, food, location));
 				QCooker.nodes.add(new WithdrawFood(ctx, food, Gui.this, other));
 				QCooker.nodes.add(new Wait(ctx));
@@ -123,7 +123,7 @@ public class Gui extends MethodProvider {
 				makingPizza = true;
 				QCooker.nodes.add(new CloseBank(ctx, food, Gui.this, other));
 				QCooker.nodes.add(new DepositInventory(ctx, food, other, Gui.this));
-				QCooker.nodes.add(new OpenBank(ctx, food, location, other, Gui.this));
+				QCooker.nodes.add(new OpenBank(ctx, food, other, Gui.this));
 				QCooker.nodes.add(new WalkToBank(ctx, food, location));
 				QCooker.nodes.add(new WithdrawFood(ctx, food, Gui.this, other));
 				QCooker.nodes.add(new Make(ctx, other));

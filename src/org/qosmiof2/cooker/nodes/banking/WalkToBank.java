@@ -4,7 +4,6 @@ import java.util.concurrent.Callable;
 
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Condition;
-import org.powerbot.script.util.Random;
 import org.powerbot.script.wrappers.Tile;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.data.Fish;
@@ -35,11 +34,11 @@ public class WalkToBank extends Node {
 	@Override
 	public void execute() {
 		QCooker.status = "Walking to bank...";
-		ctx.movement.stepTowards(new Tile(location.getBank_X(), location
-				.getBank_Y(), location.getBank_Z()));
+		ctx.movement.stepTowards(new Tile(location.getBankX(), location
+				.getBankY(), location.getBankZ()));
 //		ctx.camera.turnTo(ctx.bank.getNearest());
-		System.out.println(location.getBank_X() + "," + location.getBank_Y()
-				+ "," + location.getBank_Z());
+		System.out.println(location.getBankX() + "," + location.getBankY()
+				+ "," + location.getBankZ());
 		Condition.wait(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {

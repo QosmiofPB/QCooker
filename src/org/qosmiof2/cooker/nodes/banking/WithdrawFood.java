@@ -2,8 +2,8 @@ package org.qosmiof2.cooker.nodes.banking;
 
 import java.util.concurrent.Callable;
 
-import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.methods.Bank.Amount;
+import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Condition;
 import org.powerbot.script.util.Random;
 import org.qosmiof2.cooker.QCooker;
@@ -25,7 +25,7 @@ public class WithdrawFood extends Node {
 		this.other = other;
 	}
 
-	private int rawFood, pizzaBaseId, tomatoId, cheeseId, id;
+	private int rawFood, pizzaBaseId, tomatoId, cheeseId;
 
 	@Override
 	public boolean activate() {

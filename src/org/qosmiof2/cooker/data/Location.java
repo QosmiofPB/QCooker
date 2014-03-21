@@ -43,15 +43,15 @@ public enum Location {
 		return NAME;
 	}
 	
-	public int getBank_X() {
+	public int getBankX() {
 		return BANK_X;
 	}
 
-	public int getBank_Y() {
+	public int getBankY() {
 		return BANK_Y;
 	}
 
-	public int getBank_Z() {
+	public int getBankZ() {
 		return BANK_Z;
 	}
 

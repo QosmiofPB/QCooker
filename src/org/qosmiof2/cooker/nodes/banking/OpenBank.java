@@ -8,7 +8,6 @@ import org.powerbot.script.util.Random;
 import org.powerbot.script.wrappers.Tile;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.data.Fish;
-import org.qosmiof2.cooker.data.Location;
 import org.qosmiof2.cooker.data.Other;
 import org.qosmiof2.cooker.gui.Gui;
 import org.qosmiof2.cooker.nodes.framework.Node;
@@ -19,13 +18,10 @@ public class OpenBank extends Node {
 	private Other other;
 	private Fish food;
 	private Gui gui;
-	private Location location;
 
-	public OpenBank(MethodContext ctx, Fish food, Location location,
-			Other other, Gui gui) {
+	public OpenBank(MethodContext ctx, Fish food, Other other, Gui gui) {
 		super(ctx);
 		this.food = food;
-		this.location = location;
 		this.other = other;
 		this.gui = gui;
 	}
