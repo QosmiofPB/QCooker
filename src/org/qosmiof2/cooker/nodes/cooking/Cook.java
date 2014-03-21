@@ -55,7 +55,7 @@ public class Cook extends Node {
 						public Boolean call() throws Exception {
 							return buttonComponent.isVisible();
 						}
-					}, 1000, 2);
+					}, 1000, 3);
 
 				} else {
 					ctx.camera.turnTo(range);

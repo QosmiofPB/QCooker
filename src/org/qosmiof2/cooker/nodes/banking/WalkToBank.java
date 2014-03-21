@@ -37,7 +37,7 @@ public class WalkToBank extends Node {
 		QCooker.status = "Walking to bank...";
 		ctx.movement.stepTowards(new Tile(location.getBank_X(), location
 				.getBank_Y(), location.getBank_Z()));
-		ctx.camera.turnTo(ctx.bank.getNearest());
+//		ctx.camera.turnTo(ctx.bank.getNearest());
 		System.out.println(location.getBank_X() + "," + location.getBank_Y()
 				+ "," + location.getBank_Z());
 		Condition.wait(new Callable<Boolean>() {

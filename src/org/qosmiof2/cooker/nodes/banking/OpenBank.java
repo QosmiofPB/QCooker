@@ -4,6 +4,8 @@ import java.util.concurrent.Callable;
 
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Condition;
+import org.powerbot.script.util.Random;
+import org.powerbot.script.wrappers.Tile;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.data.Location;
@@ -19,7 +21,8 @@ public class OpenBank extends Node {
 	private Gui gui;
 	private Location location;
 
-	public OpenBank(MethodContext ctx, Fish food, Location location, Other other, Gui gui) {
+	public OpenBank(MethodContext ctx, Fish food, Location location,
+			Other other, Gui gui) {
 		super(ctx);
 		this.food = food;
 		this.location = location;
@@ -30,8 +33,8 @@ public class OpenBank extends Node {
 	@Override
 	public boolean activate() {
 		rawFood = food.getRawId();
-		if(gui.makingPizza){
-			
+		if (gui.makingPizza) {
+
 		}
 		return ctx.backpack.select().id(rawFood).first().isEmpty()
 				&& ctx.players.local().isIdle()
@@ -49,7 +52,12 @@ public class OpenBank extends Node {
 	public void execute() {
 
 		if (ctx.bank.isInViewport()) {
-			ctx.camera.turnTo(ctx.bank.getNearest());
+			ctx.camera
+					.turnTo(new Tile((ctx.bank.getNearest().getLocation()
+							.getX() + -Random.nextInt(1, 10)), (ctx.bank
+							.getNearest().getLocation().getY() + -Random
+							.nextInt(1, 10)), (ctx.bank.getNearest()
+							.getLocation().plane + -Random.nextInt(1, 10))));
 			QCooker.setStatus("Opening bank...");
 			if (!ctx.bank.isOpen()) {
 				ctx.bank.open();
