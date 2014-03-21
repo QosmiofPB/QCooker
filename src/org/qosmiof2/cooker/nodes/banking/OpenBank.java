@@ -49,6 +49,7 @@ public class OpenBank extends Node {
 	public void execute() {
 
 		if (ctx.bank.isInViewport()) {
+			ctx.camera.turnTo(ctx.bank.getNearest());
 			QCooker.setStatus("Opening bank...");
 			if (!ctx.bank.isOpen()) {
 				ctx.bank.open();

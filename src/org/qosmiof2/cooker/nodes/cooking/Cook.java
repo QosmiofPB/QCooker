@@ -4,6 +4,7 @@ import java.util.concurrent.Callable;
 
 import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Condition;
+import org.powerbot.script.util.Random;
 import org.powerbot.script.wrappers.Component;
 import org.powerbot.script.wrappers.GameObject;
 import org.powerbot.script.wrappers.Item;
@@ -47,6 +48,7 @@ public class Cook extends Node {
 			final Item food = ctx.backpack.select().id(rawFood).first().poll();
 
 			if (food.interact("Use") && !buttonComponent.isVisible()) {
+				ctx.camera.setPitch(Random.nextInt(70, 72));
 				if (range.interact("Use") && !buttonComponent.isVisible()) {
 					Condition.wait(new Callable<Boolean>() {
 						@Override

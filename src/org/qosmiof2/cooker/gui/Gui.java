@@ -46,9 +46,9 @@ public class Gui extends MethodProvider {
 	private final JPanel panelMake = new JPanel();
 	private final JButton buttonCook = new JButton("Cook");
 	private final JButton buttonMake = new JButton("Make");
-	private final JComboBox<Fish> cbCook = new JComboBox<>(Fish.values());
-	private final JComboBox<Location> cbLoc = new JComboBox<>(Location.values());
-	private final JComboBox<Other> cbMake = new JComboBox<>(Other.values());
+	private final JComboBox<Fish> cbCook = new JComboBox<Fish>(Fish.values());
+	private final JComboBox<Location> cbLoc = new JComboBox<Location>(Location.values());
+	private final JComboBox<Other> cbMake = new JComboBox<Other>(Other.values());
 	public boolean makingPizza = false;
 
 	private void init() {
