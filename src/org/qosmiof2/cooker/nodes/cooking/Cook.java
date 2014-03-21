@@ -45,7 +45,7 @@ public class Cook extends Node {
 				.poll();
 		if (range.isInViewport()) {
 			QCooker.setStatus("Cooking...");
-			final Item food = ctx.backpack.select().id(rawFood).first().poll();
+			final Item food = ctx.backpack.select().id(rawFood).shuffle().poll();
 
 			if (food.interact("Use") && !buttonComponent.isVisible()) {
 				ctx.camera.setPitch(Random.nextInt(70, 72));

@@ -2,7 +2,7 @@ package org.qosmiof2.cooker.data;
 
 public enum Other {
 	
-	UNCOOKED_PIZZA("Uncooked pizza", 2287, 1982, 2283, 1985);
+	UncookedPizza("Uncooked pizza", 2287, 1982, 2283, 1985);
 	
 	private String NAME;
 	private int ID;
