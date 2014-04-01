@@ -2,24 +2,24 @@ package org.qosmiof2.cooker.nodes.cooking;
 
 import java.util.concurrent.Callable;
 
-import org.powerbot.script.methods.MethodContext;
-import org.powerbot.script.util.Condition;
-import org.powerbot.script.wrappers.Component;
+import org.powerbot.script.Condition;
+import org.powerbot.script.rt6.ClientContext;
+import org.powerbot.script.rt6.Component;
 import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class PressButton extends Node{
 
-	private Component buttonComponent = ctx.widgets.get(1370, 38);
-	private Component cookingComponent = ctx.widgets.get(1251, 11);
+	private Component buttonComponent = ctx.widgets.component(1370, 38);
+	private Component cookingComponent = ctx.widgets.component(1251, 11);
 	
-	public PressButton(MethodContext ctx) {
+	public PressButton(ClientContext ctx) {
 		super(ctx);
 	}
 
 	@Override
 	public boolean activate() {
-		return buttonComponent.isVisible()
-				&& ctx.players.local().getAnimation() == -1;
+		return buttonComponent.visible()
+				&& ctx.players.local().animation() == -1;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class PressButton extends Node{
 		Condition.wait(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
-				return cookingComponent.isVisible();
+				return cookingComponent.visible();
 			}
 		}, 1000, 5);
 		

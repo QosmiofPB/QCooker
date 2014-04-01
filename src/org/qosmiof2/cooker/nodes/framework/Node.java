@@ -1,11 +1,10 @@
 package org.qosmiof2.cooker.nodes.framework;
 
-import org.powerbot.script.methods.MethodContext;
-import org.powerbot.script.methods.MethodProvider;
+import org.powerbot.script.rt6.*;
 
-public abstract class Node extends MethodProvider {
+public abstract class Node extends ClientAccessor {
 
-	public Node(MethodContext ctx) {
+	public Node(ClientContext ctx) {
 		super(ctx);
 	}
 

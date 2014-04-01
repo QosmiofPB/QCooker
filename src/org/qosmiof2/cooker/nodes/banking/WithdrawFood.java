@@ -2,13 +2,11 @@ package org.qosmiof2.cooker.nodes.banking;
 
 import java.util.concurrent.Callable;
 
-import org.powerbot.script.methods.Bank.Amount;
-import org.powerbot.script.methods.MethodContext;
-import org.powerbot.script.util.Condition;
-import org.powerbot.script.util.Random;
-import org.qosmiof2.cooker.QCooker;
+import org.powerbot.script.Condition;
+import org.powerbot.script.Random;
+import org.powerbot.script.rt6.Bank.Amount;
+import org.powerbot.script.rt6.ClientContext;
 import org.qosmiof2.cooker.data.Fish;
-import org.qosmiof2.cooker.data.Other;
 import org.qosmiof2.cooker.gui.Gui;
 import org.qosmiof2.cooker.nodes.framework.Node;
 
@@ -16,13 +14,11 @@ public class WithdrawFood extends Node {
 
 	private Fish food;
 	private Gui gui;
-	private Other other;
 
-	public WithdrawFood(MethodContext ctx, Fish food, Gui gui, Other other) {
+	public WithdrawFood(ClientContext ctx, Fish food, Gui gui) {
 		super(ctx);
 		this.food = food;
 		this.gui = gui;
-		this.other = other;
 	}
 
 	private int rawFood, pizzaBaseId, tomatoId, cheeseId;
@@ -30,10 +26,7 @@ public class WithdrawFood extends Node {
 	@Override
 	public boolean activate() {
 		rawFood = food.getRawId();
-		pizzaBaseId = other.getPizzaBaseId();
-		tomatoId = other.getTomatoId();
-		cheeseId = other.getCheeseId();
-		return ctx.players.local().getAnimation() == -1 && ctx.bank.isOpen()
+		return ctx.players.local().animation() == -1 && ctx.bank.opened()
 				&& ctx.backpack.select().isEmpty();
 	}
 
@@ -62,12 +55,11 @@ public class WithdrawFood extends Node {
 		if (!ctx.backpack.select().id(pizzaBaseId).isEmpty()
 				&& !ctx.backpack.select().id(tomatoId).isEmpty()
 				&& !ctx.backpack.select().id(cheeseId).isEmpty()) {
-			QCooker.setStatus("Closing bank...");
 			ctx.bank.close();
 			Condition.wait(new Callable<Boolean>() {
 				@Override
 				public Boolean call() throws Exception {
-					return !ctx.bank.isOpen();
+					return !ctx.bank.opened();
 				}
 			}, 500, 2);
 		}
@@ -75,15 +67,15 @@ public class WithdrawFood extends Node {
 	}
 
 	private void withdrawRawFood() {
-		switch (Random.nextInt(0, 10)){
+		switch (Random.nextInt(0, 10)) {
 		default:
 			ctx.bank.withdraw(rawFood, Amount.ALL);
 			break;
-			
+
 		case 5:
 			ctx.bank.withdraw(rawFood, 28);
 			break;
-		}		
+		}
 		Condition.wait(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
@@ -91,12 +83,11 @@ public class WithdrawFood extends Node {
 			}
 		}, 500, 2);
 		if (!ctx.backpack.select().id(rawFood).isEmpty()) {
-			QCooker.setStatus("Closing bank...");
 			ctx.bank.close();
 			Condition.wait(new Callable<Boolean>() {
 				@Override
 				public Boolean call() throws Exception {
-					return !ctx.bank.isOpen();
+					return !ctx.bank.opened();
 				}
 			}, 500, 2);
 		}

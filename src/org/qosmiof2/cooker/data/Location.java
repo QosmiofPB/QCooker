@@ -1,6 +1,6 @@
 package org.qosmiof2.cooker.data;
 
-import org.powerbot.script.util.Random;
+import org.powerbot.script.Random;
 
 public enum Location {
 	AL_KHARID("Al Kharid", 3274, 3183, 0, (3270 +- 2), (3168 +- Random.nextInt(1, 3)), 0), 

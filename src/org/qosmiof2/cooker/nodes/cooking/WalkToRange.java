@@ -2,12 +2,11 @@ package org.qosmiof2.cooker.nodes.cooking;
 
 import java.util.concurrent.Callable;
 
-import org.powerbot.script.methods.MethodContext;
-import org.powerbot.script.util.Condition;
-import org.powerbot.script.util.Random;
-import org.powerbot.script.wrappers.GameObject;
-import org.powerbot.script.wrappers.Tile;
-import org.qosmiof2.cooker.QCooker;
+import org.powerbot.script.Condition;
+import org.powerbot.script.Random;
+import org.powerbot.script.Tile;
+import org.powerbot.script.rt6.ClientContext;
+import org.powerbot.script.rt6.GameObject;
 import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.data.Location;
 import org.qosmiof2.cooker.nodes.framework.Node;
@@ -18,7 +17,7 @@ public class WalkToRange extends Node {
 	private Location location;
 	private int rangeId = 2772;
 
-	public WalkToRange(MethodContext ctx, Fish food, Location location) {
+	public WalkToRange(ClientContext ctx, Fish food, Location location) {
 		super(ctx);
 		this.food = food;
 		this.location = location;
@@ -28,33 +27,35 @@ public class WalkToRange extends Node {
 	public boolean activate() {
 		final GameObject range = ctx.objects.select().id(rangeId).nearest()
 				.first().poll();
-		return ctx.players.local().getAnimation() == -1
-				&& !range.isInViewport()
+		return ctx.players.local().animation() == -1
+				&& !range.inViewport()
 				&& !ctx.backpack.select().id(food.getRawId()).isEmpty()
-				&& ctx.players.local().isIdle()
-				&& ctx.movement.getDistance(range, ctx.players.local().getLocation()) > 10;
+				&& ctx.players.local().idle()
+				&& ctx.movement.distance(range, ctx.players.local().tile()) > 10;
 	}
 
 	@Override
 	public void execute() {
 		final GameObject range = ctx.objects.select().id(rangeId).first()
 				.poll();
-		QCooker.setStatus("Walking to range...");
-		ctx.movement.stepTowards(new Tile((location.getX() +- Random.nextInt(1, 5)), (location.getY() +- Random.nextInt(1, 5)), location.getZ()));
+		ctx.movement.step(new Tile((location.getX() + -Random.nextInt(1, 5)),
+				(location.getY() + -Random.nextInt(1, 5)), location.getZ()));
 		Condition.wait(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
-				return range.isInViewport() && ctx.movement.getDistance(range, ctx.players.local().getLocation()) <= 10;
+				return range.inViewport()
+						&& ctx.movement.distance(range, ctx.players.local()
+								.tile()) <= 10;
 			}
 		}, 1000, 2);
-		
-		if(!range.isInViewport()){
+
+		if (!range.inViewport()) {
 			ctx.camera.turnTo(range);
-			ctx.camera.setPitch(Random.nextInt(80, 99));
+			ctx.camera.pitch(Random.nextInt(80, 99));
 			Condition.wait(new Callable<Boolean>() {
 				@Override
 				public Boolean call() throws Exception {
-					return range.isInViewport();
+					return range.inViewport();
 				}
 			}, 500, 2);
 		}

@@ -2,10 +2,9 @@ package org.qosmiof2.cooker.nodes.banking;
 
 import java.util.concurrent.Callable;
 
-import org.powerbot.script.methods.MethodContext;
-import org.powerbot.script.util.Condition;
-import org.powerbot.script.wrappers.Tile;
-import org.qosmiof2.cooker.QCooker;
+import org.powerbot.script.Condition;
+import org.powerbot.script.Tile;
+import org.powerbot.script.rt6.ClientContext;
 import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.data.Location;
 import org.qosmiof2.cooker.nodes.framework.Node;
@@ -17,7 +16,7 @@ public class WalkToBank extends Node {
 
 	// So it doesn't go to the same bank everytime....
 
-	public WalkToBank(MethodContext ctx, Fish food, Location location) {
+	public WalkToBank(ClientContext ctx, Fish food, Location location) {
 		super(ctx);
 		this.location = location;
 		this.food = food;
@@ -25,16 +24,15 @@ public class WalkToBank extends Node {
 
 	@Override
 	public boolean activate() {
-		return ctx.players.local().isIdle()
+		return ctx.players.local().idle()
 				&& ctx.backpack.select().id(food.getRawId()).isEmpty()
-				&& ctx.players.local().getAnimation() == -1
-				&& !ctx.bank.isOpen() && !ctx.bank.isInViewport();
+				&& ctx.players.local().animation() == -1
+				&& !ctx.bank.opened() && !ctx.bank.inViewport();
 	}
 
 	@Override
-	public void execute() {
-		QCooker.status = "Walking to bank...";
-		ctx.movement.stepTowards(new Tile(location.getBankX(), location
+	public void execute() {;
+		ctx.movement.step(new Tile(location.getBankX(), location
 				.getBankY(), location.getBankZ()));
 //		ctx.camera.turnTo(ctx.bank.getNearest());
 		System.out.println(location.getBankX() + "," + location.getBankY()
@@ -42,7 +40,7 @@ public class WalkToBank extends Node {
 		Condition.wait(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
-				return ctx.bank.isInViewport();
+				return ctx.bank.inViewport();
 			}
 		}, 1000, 4);
 	}
