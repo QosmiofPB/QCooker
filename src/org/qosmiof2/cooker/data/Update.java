@@ -17,16 +17,10 @@ public class Update extends TimerTask {
 		this.qc = qc;
 	}
 
-	private int exp = 0;
-	private int lvl = 0;
-	public int cooked = 0;
-	public int burnt = 0;
-	public int startExp = 0;
-	public int startLvl = 0;
+	private int exp, lvl, cooked, burnt, startExp, startLvl, cookedPrice,
+			rawPrice = 0;
 	private InfoGui gui = new InfoGui(ctx);
 	private String time;
-	private int cookedPrice;
-	private int rawPrice;
 	private long runTime;
 
 	public void setStartExp(int startExp) {
@@ -72,7 +66,7 @@ public class Update extends TimerTask {
 		gui.updateStats();
 	}
 
-	public String formatTime(final long time) {
+	private String formatTime(final long time) {
 		final int sec = (int) (time / 1000), hour = sec / 3600, minute = sec / 60 % 60, s = sec % 60;
 		return (hour < 10 ? "0" + hour : hour) + ":"
 				+ (minute < 10 ? "0" + minute : minute) + ":"

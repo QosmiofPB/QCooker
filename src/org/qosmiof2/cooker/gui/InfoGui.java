@@ -47,21 +47,17 @@ public class InfoGui extends ClientAccessor {
 	private final JLabel gpLabel = new JLabel("Profit | loss: 0");
 	private JComboBox<Fish> fishCb = new JComboBox<Fish>(Fish.values());
 
-	private int exp = 0;
-	private int lvl = 0;
-	private int lvlGained = 0;
-	private int cooked = 0;
-	private int burnt = 0;
+	private int exp, lvl, lvlGained, cooked, burnt, profit = 0;
 	private String runTime;
-	private int profit;
 
 	public void setExp(int exp) {
 		this.exp = exp;
 	}
 
-	public void setProfit(int profit){
+	public void setProfit(int profit) {
 		this.profit = profit;
 	}
+
 	public void setTimeRunning(String string) {
 		this.runTime = string;
 	}
@@ -128,7 +124,7 @@ public class InfoGui extends ClientAccessor {
 		panel1.add(labelTime);
 		panel1.add(labelBurnt);
 		panel1.add(profitLabel);
-		
+
 		labelExp.setLocation(20, 20);
 		labelExp.setSize(120, 20);
 
@@ -143,7 +139,7 @@ public class InfoGui extends ClientAccessor {
 
 		profitLabel.setLocation(20, 100);
 		profitLabel.setSize(120, 20);
-		
+
 		labelTime.setLocation(20, 120);
 		labelTime.setSize(120, 20);
 
@@ -153,7 +149,7 @@ public class InfoGui extends ClientAccessor {
 		fish = (Fish) fishCb.getSelectedItem();
 		cookedFood = GeItem.price(fish.getCookedId());
 		rawFood = GeItem.price(fish.getRawId());
-		
+
 		profitPanel.setLayout(new GroupLayout(profitPanel));
 		profitPanel.add(fishCb);
 		profitPanel.add(gpLabel);

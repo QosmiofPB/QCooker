@@ -85,7 +85,7 @@ public class QCooker extends
 
 		Graphics2D g = (Graphics2D) g1;
 
-		g.setColor(Color.white);
+		g.setColor(Color.WHITE);
 		g.drawLine(x - 5, y, x + 5, y);
 		g.drawLine(x, y - 5, x, y + 5);
 	}
