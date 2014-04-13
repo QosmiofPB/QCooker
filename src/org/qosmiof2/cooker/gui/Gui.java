@@ -10,7 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import org.powerbot.script.rt6.*;
+import org.powerbot.script.rt6.ClientAccessor;
+import org.powerbot.script.rt6.ClientContext;
 import org.qosmiof2.cooker.QCooker;
 import org.qosmiof2.cooker.data.Fish;
 import org.qosmiof2.cooker.data.Location;
@@ -36,9 +37,7 @@ public class Gui extends ClientAccessor {
 	private final JFrame frame = new JFrame("QCooker");
 	private final JTabbedPane tp = new JTabbedPane(JTabbedPane.TOP);
 	private final JPanel panelCook = new JPanel();
-	private final JPanel panelMake = new JPanel();
 	private final JButton buttonCook = new JButton("Cook");
-	private final JButton buttonMake = new JButton("Make");
 	private final JComboBox<Fish> cbCook = new JComboBox<Fish>(Fish.values());
 	private final JComboBox<Location> cbLoc = new JComboBox<Location>(
 			Location.values());

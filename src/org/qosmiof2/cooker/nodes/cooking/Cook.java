@@ -16,34 +16,32 @@ public class Cook extends Node {
 	private int rawFood;
 	private int rangeId = 2772;
 	private Component buttonComponent = ctx.widgets.component(1370, 38);
-	
+
 	private Fish food;
 
 	public Cook(ClientContext ctx, Fish food) {
 		super(ctx);
 		this.food = food;
 	}
-	
+
 	@Override
 	public boolean activate() {
-		final GameObject range = ctx.objects.select().id(rangeId).nearest().first()
-				.poll();
+		final GameObject range = ctx.objects.select().id(rangeId).poll();
 		rawFood = food.getRawId();
 		return !ctx.backpack.select().id(rawFood).isEmpty()
 				&& ctx.players.local().animation() == -1
 				&& ctx.players.local().idle()
 				&& !ctx.objects.select().id(range).isEmpty()
 				&& !ctx.widgets.component(1370, 38).visible()
-				&& !ctx.widgets.component(1251, 11).visible()
-				&& range.inViewport();
+				&& !ctx.widgets.component(1251, 11).visible();
 	}
 
 	@Override
 	public void execute() {
-		final GameObject range = ctx.objects.select().id(rangeId).nearest().first()
-				.poll();
+		final GameObject range = ctx.objects.select().id(rangeId).nearest().first().poll();
 		if (range.inViewport()) {
-			final Item food = ctx.backpack.select().id(rawFood).shuffle().poll();
+			final Item food = ctx.backpack.select().id(rawFood).shuffle()
+					.poll();
 
 			if (food.interact("Use") && !buttonComponent.visible()) {
 				ctx.camera.pitch(Random.nextInt(70, 72));
@@ -75,6 +73,6 @@ public class Cook extends Node {
 					return range.inViewport();
 				}
 			}, 500, 2);
-			}
 		}
+	}
 }

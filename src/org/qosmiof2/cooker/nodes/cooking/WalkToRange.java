@@ -4,7 +4,6 @@ import java.util.concurrent.Callable;
 
 import org.powerbot.script.Condition;
 import org.powerbot.script.Random;
-import org.powerbot.script.Tile;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
 import org.qosmiof2.cooker.data.Fish;
@@ -36,10 +35,11 @@ public class WalkToRange extends Node {
 
 	@Override
 	public void execute() {
-		final GameObject range = ctx.objects.select().id(rangeId).first()
-				.poll();
-		ctx.movement.step(new Tile((location.getX() + -Random.nextInt(1, 5)),
-				(location.getY() + -Random.nextInt(1, 5)), location.getZ()));
+		final GameObject range = ctx.objects.select().id(rangeId).nearest()
+				.first().poll();
+		ctx.movement.step(location.getRangeTile().derive(Random.nextInt(1, 3),
+				Random.nextInt(1, 4)));
+
 		Condition.wait(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {

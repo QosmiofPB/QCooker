@@ -12,44 +12,48 @@ import org.powerbot.script.MessageListener;
 import org.powerbot.script.PaintListener;
 import org.powerbot.script.PollingScript;
 import org.powerbot.script.Script.Manifest;
-import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.Skills;
 import org.qosmiof2.cooker.data.Update;
 import org.qosmiof2.cooker.gui.Gui;
 import org.qosmiof2.cooker.nodes.framework.Node;
 
-
 @Manifest(description = "Cooks anything (almost)", name = "AIO Cooker", properties = "Qosmiof2")
-public class QCooker extends PollingScript implements MessageListener,
-		PaintListener {
+public class QCooker extends
+		PollingScript<org.powerbot.script.rt6.ClientContext> implements
+		MessageListener, PaintListener {
 
 	public static ArrayList<Node> nodes = new ArrayList<>();
 
-	private int startLvl, startExp, burnt, cooked, x, y;
-
-	private Color orange = new Color(255, 140, 0);
-
+	private int burnt, cooked, x, y;
+	private long time;
 	private Update update;
 
 	@Override
 	public void start() {
 		Timer timer = new Timer();
-		timer.schedule(update = new Update((ClientContext) ctx), 0, 100);
-		update.setStartExp(0);
-		update.setStartLvl(0);
-
+		timer.schedule(update = new Update(ctx, QCooker.this), 0, 100);
+		update.setStartExp(ctx.skills.experience(Skills.COOKING));
+		update.setStartLvl(ctx.skills.realLevel(Skills.COOKING));
+		// update.setCookedPrice(GeItem.price(fish.getCookedId()));
+		// update.setRawPrice(GeItem.price(fish.getRawId()));
 		nodes.clear();
 
 		EventQueue.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
-				new Gui((ClientContext) ctx);
+				new Gui(ctx);
 			}
 
 		});
 	}
 
+	@Override
+	public void stop(){
+		ctx.controller().stop();
+	}
+
+	@Override
 	public void poll() {
 		for (Node node : nodes) {
 			if (node.activate()) {
@@ -73,10 +77,15 @@ public class QCooker extends PollingScript implements MessageListener,
 		}
 	}
 
+	public long getTime() {
+		time = getTotalRuntime();
+		return time;
+	}
+
 	@Override
 	public void repaint(Graphics g1) {
-//		x = ctx.mouse.getLocation().x;
-//		y = ctx.mouse.getLocation().y;
+		x = ctx.mouse.getLocation().x;
+		y = ctx.mouse.getLocation().y;
 
 		Graphics2D g = (Graphics2D) g1;
 

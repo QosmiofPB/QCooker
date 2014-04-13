@@ -38,6 +38,7 @@ public class InfoGui extends ClientAccessor {
 	private final JLabel labelLvl = new JLabel();
 	private final JLabel labelCooked = new JLabel();
 	private final JLabel labelTime = new JLabel();
+	private final JLabel profitLabel = new JLabel();
 	private final JLabel labelBurnt = new JLabel();
 	private final JTabbedPane tp = new JTabbedPane();
 	private final JPanel profitPanel = new JPanel();
@@ -52,11 +53,15 @@ public class InfoGui extends ClientAccessor {
 	private int cooked = 0;
 	private int burnt = 0;
 	private String runTime;
+	private int profit;
 
 	public void setExp(int exp) {
 		this.exp = exp;
 	}
 
+	public void setProfit(int profit){
+		this.profit = profit;
+	}
 	public void setTimeRunning(String string) {
 		this.runTime = string;
 	}
@@ -85,7 +90,7 @@ public class InfoGui extends ClientAccessor {
 		frame.requestFocus();
 
 		frame.setResizable(false);
-		frame.setSize(125, 200);
+		frame.setSize(125, 220);
 
 		frame.add(tp);
 
@@ -96,11 +101,16 @@ public class InfoGui extends ClientAccessor {
 	}
 
 	public void updateStats() {
+		fish = (Fish) fishCb.getSelectedItem();
+		cookedFood = GeItem.price(fish.getCookedId());
+		rawFood = GeItem.price(fish.getRawId());
+		profit = (cookedFood - rawFood) * cooked;
 		labelExp.setText("Exp: " + exp);
 		labelLvl.setText("Level: " + lvl + "(" + lvlGained + ")");
 		labelCooked.setText("Cooked: " + cooked);
 		labelTime.setText("" + runTime);
 		labelBurnt.setText("Burnt: " + burnt);
+		profitLabel.setText("Profit / loss: " + profit);
 	}
 
 	private void statPanel() {
@@ -108,7 +118,7 @@ public class InfoGui extends ClientAccessor {
 		panel.add(panel1);
 
 		panel1.setLocation(5, 5);
-		panel1.setSize(110, 130);
+		panel1.setSize(110, 150);
 		panel1.setLayout(new GroupLayout(panel1));
 		panel1.setBorder(lowered);
 
@@ -117,7 +127,8 @@ public class InfoGui extends ClientAccessor {
 		panel1.add(labelCooked);
 		panel1.add(labelTime);
 		panel1.add(labelBurnt);
-
+		panel1.add(profitLabel);
+		
 		labelExp.setLocation(20, 20);
 		labelExp.setSize(120, 20);
 
@@ -130,12 +141,19 @@ public class InfoGui extends ClientAccessor {
 		labelBurnt.setLocation(20, 80);
 		labelBurnt.setSize(120, 20);
 
-		labelTime.setLocation(20, 100);
+		profitLabel.setLocation(20, 100);
+		profitLabel.setSize(120, 20);
+		
+		labelTime.setLocation(20, 120);
 		labelTime.setSize(120, 20);
 
 	}
 
 	private void profitPanel() {
+		fish = (Fish) fishCb.getSelectedItem();
+		cookedFood = GeItem.price(fish.getCookedId());
+		rawFood = GeItem.price(fish.getRawId());
+		
 		profitPanel.setLayout(new GroupLayout(profitPanel));
 		profitPanel.add(fishCb);
 		profitPanel.add(gpLabel);
@@ -151,13 +169,14 @@ public class InfoGui extends ClientAccessor {
 				cookedFood = GeItem.price(fish.getCookedId());
 				rawFood = GeItem.price(fish.getRawId());
 				gpLabel.setText("Profit | loss: " + (cookedFood - rawFood)
-						+ " gp.");
+						+ "gp.");
 
 			}
 
 		});
 
 		gpLabel.setLocation(5, 50);
+		gpLabel.setText("Profit | loss: " + (cookedFood - rawFood) + "gp.");
 		gpLabel.setSize(110, 20);
 
 	}

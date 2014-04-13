@@ -25,7 +25,7 @@ public class CloseBank extends Node {
 	public boolean activate() {
 		id = food.getRawId();
 		return ctx.bank.opened() && ctx.players.local().animation() == -1
-				&& !ctx.players.local().inMotion()
+				&& ctx.players.local().idle()
 				&& !ctx.backpack.select().id(id).isEmpty();
 	}
 

@@ -1,58 +1,35 @@
 package org.qosmiof2.cooker.data;
 
-import org.powerbot.script.Random;
+import org.powerbot.script.Tile;
 
 public enum Location {
-	AL_KHARID("Al Kharid", 3274, 3183, 0, (3270 +- 2), (3168 +- Random.nextInt(1, 3)), 0), 
-	EDGEVILLE("Edgeville", 3079, 3496, 0, 3094, 3494, 0), 
-	COOKS_GUILD("Cooks' Guild", 3145, 3451, 0, 3144, 3450, 0), 
-	FALADOR("Falador", 3038, 3364, 0, 3014, 3355, 0),
-	VARROCK("Varrock", 3237, 3411, 0, 3253, 3421, 0);
+	AL_KHARID("Al Kharid", new Tile(3274, 3183), new Tile(3270, 3168)), 
+	EDGEVILLE("Edgeville", new Tile(3079, 3496), new Tile(3094, 3494)), 
+	COOKS_GUILD("Cooks' Guild", new Tile(3145, 3451), new Tile(3144, 3450)), 
+	FALADOR("Falador", new Tile(3038, 3364), new Tile(3014, 3355)),
+	VARROCK("Varrock", new Tile(3237, 3411), new Tile(3253, 3421));
 
-	private Location(String name, int x, int y, int z, int bank_x, int bank_y, int bank_z) {
+	private Location(String name, Tile rangeTile, Tile bankTile) {
 		this.NAME = name;
-		this.X = x;
-		this.Y = y;
-		this.Z = z;
-		this.BANK_X = bank_x;
-		this.BANK_Y = bank_y;
-		this.BANK_Z = bank_z;
+		this.BANK_TILE = bankTile;
+		this.RANGE_TILE = rangeTile;
 	}
 
 	private String NAME;
-	private int X;
-	private int Y;
-	private int Z;
-	private int BANK_X;
-	private int BANK_Y;
-	private int BANK_Z;
+	private Tile BANK_TILE;
+	private Tile RANGE_TILE;
 
-	public int getX() {
-		return X;
+	public Tile getRangeTile() {
+		return RANGE_TILE;
 	}
 
-	public int getY() {
-		return Y;
+	public Tile getBankTile(){
+		return BANK_TILE;
 	}
-
-	public int getZ() {
-		return Z;
-	}
-
+	
 	public String getName() {
 		return NAME;
 	}
-	
-	public int getBankX() {
-		return BANK_X;
-	}
 
-	public int getBankY() {
-		return BANK_Y;
-	}
-
-	public int getBankZ() {
-		return BANK_Z;
-	}
 
 }
