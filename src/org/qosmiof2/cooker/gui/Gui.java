@@ -41,7 +41,6 @@ public class Gui extends ClientAccessor {
 	private final JComboBox<Fish> cbCook = new JComboBox<Fish>(Fish.values());
 	private final JComboBox<Location> cbLoc = new JComboBox<Location>(
 			Location.values());
-	public boolean makingPizza = false;
 
 	private void init() {
 		frame.setLocationRelativeTo(null);
@@ -77,12 +76,10 @@ public class Gui extends ClientAccessor {
 				QCooker.nodes.add(new PressButton(ctx));
 				QCooker.nodes.add(new WalkToRange(ctx, food, location));
 				QCooker.nodes.add(new CloseBank(ctx, food, Gui.this));
-				QCooker.nodes.add(new DepositInventory(ctx, food, Gui.this));
-				QCooker.nodes.add(new OpenBank(ctx, food, Gui.this));
+				QCooker.nodes.add(new DepositInventory(ctx, food));
+				QCooker.nodes.add(new OpenBank(ctx, food));
 				QCooker.nodes.add(new WalkToBank(ctx, food, location));
-				QCooker.nodes.add(new WithdrawFood(ctx, food, Gui.this));
-//				QCooker.nodes.add(new Wait(ctx));
-//				QCooker.nodes.add(new LogOut(ctx, food));
+				QCooker.nodes.add(new WithdrawFood(ctx, food));
 				frame.dispose();
 
 				System.out.println(food.getRawId());

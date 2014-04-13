@@ -12,14 +12,14 @@ import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class WalkToRange extends Node {
 
-	private Fish food;
 	private Location location;
 	private int rangeId = 2772;
+	private int rawFood;
 
 	public WalkToRange(ClientContext ctx, Fish food, Location location) {
 		super(ctx);
-		this.food = food;
 		this.location = location;
+		rawFood = food.getRawId();
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class WalkToRange extends Node {
 				.first().poll();
 		return ctx.players.local().animation() == -1
 				&& !range.inViewport()
-				&& !ctx.backpack.select().id(food.getRawId()).isEmpty()
+				&& !ctx.backpack.select().id(rawFood).isEmpty()
 				&& ctx.players.local().idle()
 				&& ctx.movement.distance(range, ctx.players.local().tile()) > 10;
 	}
@@ -37,8 +37,8 @@ public class WalkToRange extends Node {
 	public void execute() {
 		final GameObject range = ctx.objects.select().id(rangeId).nearest()
 				.first().poll();
-		ctx.movement.step(location.getRangeTile().derive(Random.nextInt(1, 3),
-				Random.nextInt(1, 4)));
+		ctx.movement.step(location.getRangeTile().derive(Random.nextInt(1, 4),
+				Random.nextInt(1, 5)));
 
 		Condition.wait(new Callable<Boolean>() {
 			@Override

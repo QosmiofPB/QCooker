@@ -25,7 +25,6 @@ public class QCooker extends
 	public static ArrayList<Node> nodes = new ArrayList<>();
 
 	private int burnt, cooked, x, y;
-	private long time;
 	private Update update;
 
 	@Override
@@ -34,8 +33,6 @@ public class QCooker extends
 		timer.schedule(update = new Update(ctx, QCooker.this), 0, 100);
 		update.setStartExp(ctx.skills.experience(Skills.COOKING));
 		update.setStartLvl(ctx.skills.realLevel(Skills.COOKING));
-		// update.setCookedPrice(GeItem.price(fish.getCookedId()));
-		// update.setRawPrice(GeItem.price(fish.getRawId()));
 		nodes.clear();
 
 		EventQueue.invokeLater(new Runnable() {
@@ -49,7 +46,7 @@ public class QCooker extends
 	}
 
 	@Override
-	public void stop(){
+	public void stop() {
 		ctx.controller().stop();
 	}
 
@@ -78,8 +75,7 @@ public class QCooker extends
 	}
 
 	public long getTime() {
-		time = getTotalRuntime();
-		return time;
+		return getTotalRuntime();
 	}
 
 	@Override

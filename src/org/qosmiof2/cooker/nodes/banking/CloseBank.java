@@ -11,14 +11,12 @@ import org.qosmiof2.cooker.nodes.framework.Node;
 public class CloseBank extends Node {
 
 	private Fish food;
-	private Gui gui;
 
 	private int id;
 
 	public CloseBank(ClientContext ctx, Fish food, Gui gui) {
 		super(ctx);
 		this.food = food;
-		this.gui = gui;
 	}
 
 	@Override

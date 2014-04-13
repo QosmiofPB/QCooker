@@ -7,27 +7,18 @@ import org.powerbot.script.Random;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt6.ClientContext;
 import org.qosmiof2.cooker.data.Fish;
-import org.qosmiof2.cooker.gui.Gui;
 import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class OpenBank extends Node {
 
 	private int rawFood;
-	private Fish food;
-	private Gui gui;
-
-	public OpenBank(ClientContext ctx, Fish food, Gui gui) {
+	public OpenBank(ClientContext ctx, Fish food) {
 		super(ctx);
-		this.food = food;
-		this.gui = gui;
+		rawFood = food.getRawId();
 	}
 
 	@Override
 	public boolean activate() {
-		rawFood = food.getRawId();
-		if (gui.makingPizza) {
-
-		}
 		return ctx.backpack.select().id(rawFood).first().isEmpty()
 				&& !ctx.players.local().inMotion()
 				&& ctx.players.local().animation() == -1

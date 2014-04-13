@@ -11,29 +11,30 @@ import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class WalkToBank extends Node {
 
-	private Fish food;
 	private Location location;
+	private int rawFood;
+	
 
 	public WalkToBank(ClientContext ctx, Fish food, Location location) {
 		super(ctx);
 		this.location = location;
-		this.food = food;
+		rawFood = food.getRawId();
 	}
 
 	@Override
 	public boolean activate() {
 		return ctx.players.local().idle()
-				&& ctx.backpack.select().id(food.getRawId()).isEmpty()
+				&& ctx.backpack.select().id(rawFood).isEmpty()
 				&& ctx.players.local().animation() == -1 && !ctx.bank.opened()
 				&& !ctx.bank.inViewport();
 	}
 
 	@Override
 	public void execute() {
-		ctx.movement.step(location.getBankTile().derive(Random.nextInt(1, 3),
-				Random.nextInt(1, 4)));
-		System.out.println(location.getBankTile().derive(Random.nextInt(1, 3),
-				Random.nextInt(1, 4)));
+		ctx.movement.step(location.getBankTile().derive(Random.nextInt(1, 4),
+				Random.nextInt(1, 5)));
+		System.out.println(location.getBankTile().derive(Random.nextInt(1, 4),
+				Random.nextInt(1, 5)));
 		Condition.wait(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {

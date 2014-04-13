@@ -5,25 +5,22 @@ import java.util.concurrent.Callable;
 import org.powerbot.script.Condition;
 import org.powerbot.script.rt6.ClientContext;
 import org.qosmiof2.cooker.data.Fish;
-import org.qosmiof2.cooker.gui.Gui;
 import org.qosmiof2.cooker.nodes.framework.Node;
 
 public class DepositInventory extends Node {
 
-	private Fish food;
-	private int id;
+	private int rawFood;
 
-	public DepositInventory(ClientContext ctx, Fish food, Gui gui) {
+	public DepositInventory(ClientContext ctx, Fish food) {
 		super(ctx);
-		this.food = food;
+		rawFood = food.getRawId();
 	}
 
 	@Override
 	public boolean activate() {
-		id = food.getRawId();
 		return ctx.players.local().animation() == -1 && ctx.bank.opened()
 				&& !ctx.backpack.select().isEmpty()
-				&& ctx.backpack.select().id(id).isEmpty();
+				&& ctx.backpack.select().id(rawFood).isEmpty();
 	}
 
 	@Override
